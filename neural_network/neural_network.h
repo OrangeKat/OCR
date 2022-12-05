@@ -11,11 +11,11 @@
     - number of training sets
 */
 
-int num_inputs = 100;
-int num_hidden = 100;
+int num_inputs = 1024;
+int num_hidden = 1024;
 int num_output = 10;
 double learning_rate = 0.1f;
-int res = 100;
+int res = 32;
 int num_training_sets = 0;
 
 /*
@@ -55,7 +55,7 @@ int train_network(
     double** output_layer_weights[num_hidden][num_output]
     );
 void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[], 
-    double** hidden_layer_weights[num_inputs][num_hidden], double training_input[]);
+    double** hidden_layer_weights[num_inputs][num_hidden], double* training_input[]);
 void compute_output_layer(double* output_layer[], double* output_layer_bias[], 
     double** output_layer_weights[num_hidden][num_output], double* hidden_layer[]);
 

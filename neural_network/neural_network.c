@@ -106,16 +106,15 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights[num_inpu
 void convert_images_to_training_data(char path[], double** training_set_inputs[num_training_sets][num_inputs],
     double** training_set_outputs[num_training_sets][num_output]){
     FILE *fp;
+    printf(path);
     fp = fopen(path, "r");
     for (int i = 0; i < num_training_sets; i++){
-        for (int j = 0; j < num_inputs; j++){
-            char path[100];
-            fscanf(fp, "%99s", path);
-            *training_set_inputs[i][j] = convert_to_array(path);
-        }
+        char path[100];
+        fscanf(fp, "%99s", path);
+        *training_set_inputs[i] = convert_to_array(path);
         fscanf(fp, "\n");
         for (int j = 0; j < num_output; j++){
-            fscanf(fp, "%lf, ", *training_set_outputs[i][j]);
+            fscanf(fp, "%lf, ", **training_set_outputs[i][j]);
         }
         fscanf(fp, "\n");
     }
@@ -142,10 +141,10 @@ int train_network(
     // Create training data
     num_training_sets = 10;
 
-    convert_images_to_training_data(path, training_set_inputs, training_set_outputs);
+    double** training_inputs[num_training_sets][num_hidden];
+    double** training_outputs[num_training_sets][num_output];
 
-    double training_inputs[num_training_sets][num_hidden];
-    double training_outputs[num_training_sets][num_output];
+    convert_images_to_training_data(path, training_inputs, training_outputs);
 
     // Init weights and biases
     for (int i = 0; i < num_inputs; i++) {
@@ -189,7 +188,7 @@ int train_network(
             //Compute change in output layer
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
-                double error = training_outputs[k][j] - *output_layer[j];
+                double error = **training_outputs[k][j] - *output_layer[j];
                 delta_output[j] = error * sigmoid_derivative(*output_layer[j]);
             }
 
@@ -215,7 +214,7 @@ int train_network(
             for (int j = 0; j < num_hidden; j++){
                 *hidden_layer_bias[j] += delta_hidden[j];
                 for (int p = 0; p < num_inputs; p++){
-                    **hidden_layer_weights[p][j] += training_inputs[k][p] * delta_hidden[j] * learning_rate;
+                    **hidden_layer_weights[p][j] += **training_inputs[k][p] * delta_hidden[j] * learning_rate;
                 }
             }
         }
@@ -226,12 +225,12 @@ int train_network(
 
 // Compute hidden layer
 void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[], 
-    double** hidden_layer_weights[num_inputs][num_hidden], double training_input[]){
+    double** hidden_layer_weights[num_inputs][num_hidden], double* training_input[]){
     
     for (int j = 0; j < num_hidden; j++){
         double activation = *hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * **hidden_layer_weights[p][j];
+            activation += *training_input[p] * **hidden_layer_weights[p][j];
         }
         *hidden_layer[j] = sigmoid(activation);
     }
@@ -279,7 +278,7 @@ int main(){
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
         load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	printf("Weights and biases loaded and set.\n")
+	printf("Weights and biases loaded and set.\n");
     } 
     else {
         int epochs = 100000;
@@ -297,7 +296,7 @@ int main(){
             printf("Enter path where to save weights and biases: \n");
             char path[] = "bin/weights_biases.txt";
             save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	    printf("Weights and biases saved.\n")
+	    printf("Weights and biases saved.\n");
         }
     }
 
