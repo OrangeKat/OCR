@@ -38,8 +38,8 @@ void save_weights_and_biases(char path[], double** hidden_layer_weights[num_inpu
 void load_weights_and_biases(char path[], double** hidden_layer_weights[num_inputs][num_hidden], 
     double** output_layer_weights[num_hidden][num_output], double* hidden_layer_bias[num_hidden], 
     double* output_layer_bias[num_output]);
-void convert_images_to_training_data(char path[], double** training_set_inputs[num_training_sets][num_inputs],
-    double** training_set_outputs[num_training_sets][num_output]);
+void convert_images_to_training_data(char path[], double* training_set_inputs[num_training_sets][num_inputs],
+    double* training_set_outputs[num_training_sets][num_output]);
 
 /*
     Neural network functions:
@@ -55,7 +55,7 @@ int train_network(
     double** output_layer_weights[num_hidden][num_output]
     );
 void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[], 
-    double** hidden_layer_weights[num_inputs][num_hidden], double* training_input[]);
+    double** hidden_layer_weights[num_inputs][num_hidden], double* training_input[num_hidden]);
 void compute_output_layer(double* output_layer[], double* output_layer_bias[], 
     double** output_layer_weights[num_hidden][num_output], double* hidden_layer[]);
 
