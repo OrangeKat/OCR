@@ -11,12 +11,50 @@
     - number of training sets
 */
 
-int num_inputs = 1024;
-int num_hidden = 1024;
-int num_output = 10;
-double learning_rate = 0.1f;
-int res = 32;
-int num_training_sets = 0;
+const int num_inputs = 1024;
+const int num_hidden = 1024;
+const int num_output = 10;
+const double learning_rate = 0.1f;
+const int res = 32;
+const int num_training_sets = 10;
+
+/*
+        Training data:
+--------------------------------
+*/
+char training_inputs[num_training_sets][20] = {
+    "images/0.png",
+    "images/1.png",
+    "images/2.png",
+    "images/3.png",
+    "images/4.png",
+    "images/5.png",
+    "images/6.png",
+    "images/7.png",
+    "images/8.png",
+    "images/9.png"
+};
+/*
+        (Training input)
+--------------------------------
+*/
+double training_outputs[num_training_sets][num_output] = {
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+};
+/*
+        (Training output)
+--------------------------------
+*/
+
 
 /*
     Helper functions:
@@ -55,7 +93,7 @@ int train_network(
     double** output_layer_weights[num_hidden][num_output]
     );
 void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[], 
-    double** hidden_layer_weights[num_inputs][num_hidden], double* training_input[num_hidden]);
+    double** hidden_layer_weights[num_inputs][num_hidden], double training_input[num_hidden]);
 void compute_output_layer(double* output_layer[], double* output_layer_bias[], 
     double** output_layer_weights[num_hidden][num_output], double* hidden_layer[]);
 

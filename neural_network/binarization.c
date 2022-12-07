@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+//#include <SDL2/SDL_image.h>
 #include "neural_network.h"
 
 /*
@@ -15,7 +15,7 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
     return resized_image;
 }
 
-// Function that converts a array of 0s and 1s to a black and white image
+// Function that gets a pixels rgb values
 Uint32 getpixel(SDL_Surface *surface, int x, int y){
     int bpp = surface->format->BytesPerPixel;
     Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
@@ -37,7 +37,7 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y){
 }
 
 // Function that converts a black and white image to a array of 0s and 1s
-double *convert_to_array(char path[]){
+double convert_to_array(char path[]){
     SDL_Surface *image = IMG_Load(path);
     resize_image(image, res);
     int height = image->h;
@@ -55,6 +55,6 @@ double *convert_to_array(char path[]){
             }
         }
     }
-    return array;
+    return *array;
 }
 
