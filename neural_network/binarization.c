@@ -41,13 +41,14 @@ double *convert_to_array(char path[]){
     return array;
 }
 
+/*
 void main(){
     double *array = convert_to_array("bin/training_set/1.png");
     SDL_Surface *image = IMG_Load("bin/training_set/1.png");
     image = resize_image(image, res);
     SDL_SaveBMP(image, "bin/1.bmp");
     image = IMG_Load("bin/training_set/1.png");
-    for (int i = 64; i < res; i-=8){
+    for (int i = 64; i > res; i-=8){
         image = resize_image(image, i);
     }
     SDL_SaveBMP(image, "bin/2.bmp");
@@ -58,4 +59,5 @@ void main(){
     }
     printf("\n");
 }
+*/
 
