@@ -130,40 +130,40 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 */ 
 
 // Compute hidden layer
-void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
-    double* hidden_layer_weights, double training_input[num_inputs]){
+void compute_hidden_layer(double* hidden_layer[num_hidden], double* hidden_layer_bias[num_hidden], 
+    double* hidden_layer_weights[num_inputs][num_hidden], double training_input[num_inputs]){
     
     for (int j = 0; j < num_hidden; j++){
-        double activation = hidden_layer_bias[j];
+        double activation = *hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * hidden_layer_weights[p][j];
+            activation += training_input[p] * *hidden_layer_weights[p][j];
         }
-        hidden_layer[j] = sigmoid(activation);
+        *hidden_layer[j] = sigmoid(activation);
     }
 }
 
 // Compute output layer
-void compute_output_layer(double* output_layer, double* output_layer_bias, 
-    double* output_layer_weights, double* hidden_layer){
+void compute_output_layer(double* output_layer[num_output], double* output_layer_bias[num_output], 
+    double* output_layer_weights[num_hidden][num_output], double* hidden_layer[num_hidden]){
 
     for (int j = 0; j < num_output; j++){
-        double activation = output_layer_bias[j];
+        double activation = *output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
-            activation += hidden_layer[p] * output_layer_weights[p][j];
+            activation += *hidden_layer[p] * *output_layer_weights[p][j];
         }
-        output_layer[j] = sigmoid(activation);
+        *output_layer[j] = sigmoid(activation);
     }
 }
 
 // Train neural network
 int train_network(
     int epochs, 
-    double* hidden_layer,//[num_hidden],
-    double* output_layer,//[num_output], 
-    double* hidden_layer_bias,//[num_hidden], 
-    double* output_layer_bias,//[num_output], 
-    double* hidden_layer_weights,//[num_inputs][num_hidden], 
-    double* output_layer_weights//[num_hidden][num_output]
+    double* hidden_layer[num_hidden],
+    double* output_layer[num_output], 
+    double* hidden_layer_bias[num_hidden], 
+    double* output_layer_bias[num_output], 
+    double* hidden_layer_weights[num_inputs][num_hidden], 
+    double* output_layer_weights[num_hidden][num_output]
     ){
     printf("Setting weights and biases...\n");
     // Deprecated doesnt work (TO FIX)
@@ -172,19 +172,19 @@ int train_network(
     // Init weights and biases
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
-            hidden_layer_weights[i][j] = init_weight_bias();
+            *hidden_layer_weights[i][j] = init_weight_bias();
         }
     }
     
     for (int i = 0; i < num_hidden; i++) {
-        hidden_layer_bias[i] = init_weight_bias();
+        *hidden_layer_bias[i] = init_weight_bias();
         for (int j = 0; j < num_output; j++) {
-            output_layer_weights[i][j] = init_weight_bias();
+            *output_layer_weights[i][j] = init_weight_bias();
         }
     }
 
     for (int i = 0; i < num_output; i++) {
-        output_layer_bias[i] = init_weight_bias();
+        *output_layer_bias[i] = init_weight_bias();
     }
 
     printf("Training network..\n.");
@@ -217,7 +217,7 @@ int train_network(
             //Compute change in output layer
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
-                double error = input[j] - output_layer[j];
+                double error = input[j] - *output_layer[j];
                 delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
 
@@ -226,7 +226,7 @@ int train_network(
             for (int j = 0; j < num_hidden; j++){
                 double error = 0.0f;
                 for (int p = 0; p < num_output; p++){
-                    error += delta_output[p] * output_layer_weights[j][p];
+                    error += delta_output[p] * *output_layer_weights[j][p];
                 }
                 delta_hidden[j] = error * sigmoid_derivative(*hidden_layer[j]);
             }
@@ -235,7 +235,7 @@ int train_network(
             for (int j = 0; j < num_output; j++){
                 *output_layer_bias[j] += delta_output[j];
                 for (int p = 0; p < num_hidden; p++){
-                    output_layer_weights[p][j] += hidden_layer[p] * delta_output[j] * learning_rate;
+                    *output_layer_weights[p][j] += *hidden_layer[p] * delta_output[j] * learning_rate;
                 }
             }
 
@@ -243,7 +243,7 @@ int train_network(
             for (int j = 0; j < num_hidden; j++){
                 *hidden_layer_bias[j] += delta_hidden[j];
                 for (int p = 0; p < num_inputs; p++){
-                    hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
+                    *hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
         }
@@ -264,7 +264,7 @@ int train_network(
 
 int main(){
 
-    double* hidden_layer = calloc(num_hidden, sizeof(double));
+    double* hidden_layer[num_hidden] = calloc(num_hidden, sizeof(double));
     double* output_layer = calloc(num_output, sizeof(double)); 
 
     double* hidden_layer_bias = calloc(num_hidden, sizeof(double)); 
