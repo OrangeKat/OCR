@@ -51,22 +51,22 @@ void save_weights_and_biases(char path[], double** hidden_layer_weights,
     fp = fopen(path, "w");
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
-            fprintf(fp, "%lf, ", *hidden_layer_weights[i][j]);
+            fprintf(fp, "%lf, ", hidden_layer_weights[i][j]);
         }
     }
     fprintf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
         for (int j = 0; j < num_output; j++){
-            fprintf(fp, "%lf, ", *output_layer_weights[i][j]);
+            fprintf(fp, "%lf, ", output_layer_weights[i][j]);
         }
     }
     fprintf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
-        fprintf(fp, "%lf, ", *hidden_layer_bias[i]);
+        fprintf(fp, "%lf, ", hidden_layer_bias[i]);
     }
     fprintf(fp, "\n");
     for (int i = 0; i < num_output; i++){
-        fprintf(fp, "%lf, ", *output_layer_bias[i]);
+        fprintf(fp, "%lf, ", output_layer_bias[i]);
     }
     fclose(fp);
 
@@ -79,22 +79,22 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     fp = fopen(path, "r");
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
-            fscanf(fp, "%lf, ", hidden_layer_weights[i][j]);
+            fscanf(fp, "%f, ", hidden_layer_weights[i][j]);
         }
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
         for (int j = 0; j < num_output; j++){
-            fscanf(fp, "%lf, ", output_layer_weights[i][j]);
+            fscanf(fp, "%f, ", output_layer_weights[i][j]);
         }
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
-        fscanf(fp, "%lf, ", hidden_layer_bias[i]);
+        fscanf(fp, "%f, ", hidden_layer_bias[i]);
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_output; i++){
-        fscanf(fp, "%lf, ", output_layer_bias[i]);
+        fscanf(fp, "%f, ", output_layer_bias[i]);
     }
     fscanf(fp, "\n");
     fclose(fp);
@@ -145,11 +145,11 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
     double** output_layer_weights, double* hidden_layer){
 
     for (int j = 0; j < num_output; j++){
-        double activation = *output_layer_bias[j];
+        double activation = output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
-            activation += *hidden_layer[p] * **output_layer_weights[p][j];
+            activation += hidden_layer[p] * output_layer_weights[p][j];
         }
-        *output_layer[j] = sigmoid(activation);
+        output_layer[j] = sigmoid(activation);
     }
 }
 
@@ -170,19 +170,19 @@ int train_network(
     // Init weights and biases
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
-            **hidden_layer_weights[i][j] = init_weight_bias();
+            hidden_layer_weights[i][j] = init_weight_bias();
         }
     }
     
     for (int i = 0; i < num_hidden; i++) {
-        *hidden_layer_bias[i] = init_weight_bias();
+        hidden_layer_bias[i] = init_weight_bias();
         for (int j = 0; j < num_output; j++) {
-            **output_layer_weights[i][j] = init_weight_bias();
+            output_layer_weights[i][j] = init_weight_bias();
         }
     }
 
     for (int i = 0; i < num_output; i++) {
-        *output_layer_bias[i] = init_weight_bias();
+        output_layer_bias[i] = init_weight_bias();
     }
 
     printf("Training network..\n.");
@@ -215,8 +215,8 @@ int train_network(
             //Compute change in output layer
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
-                double error = input[j] - *output_layer[j];
-                delta_output[j] = error * sigmoid_derivative(*output_layer[j]);
+                double error = input[j] - output_layer[j];
+                delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
 
             //Compute change in hidden weights
@@ -224,24 +224,24 @@ int train_network(
             for (int j = 0; j < num_hidden; j++){
                 double error = 0.0f;
                 for (int p = 0; p < num_output; p++){
-                    error += delta_output[p] * **output_layer_weights[j][p];
+                    error += delta_output[p] * output_layer_weights[j][p];
                 }
-                delta_hidden[j] = error * sigmoid_derivative(*hidden_layer[j]);
+                delta_hidden[j] = error * sigmoid_derivative(hidden_layer[j]);
             }
 
             //Update output weights
             for (int j = 0; j < num_output; j++){
-                *output_layer_bias[j] += delta_output[j];
+                output_layer_bias[j] += delta_output[j];
                 for (int p = 0; p < num_hidden; p++){
-                    **output_layer_weights[p][j] += *hidden_layer[p] * delta_output[j] * learning_rate;
+                    output_layer_weights[p][j] += hidden_layer[p] * delta_output[j] * learning_rate;
                 }
             }
 
             //Update hidden weights
             for (int j = 0; j < num_hidden; j++){
-                *hidden_layer_bias[j] += delta_hidden[j];
+                hidden_layer_bias[j] += delta_hidden[j];
                 for (int p = 0; p < num_inputs; p++){
-                    **hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
+                    hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
         }
