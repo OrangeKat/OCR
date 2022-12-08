@@ -280,11 +280,11 @@ int train_network(
 
 int *main(){
 
-    double* hidden_layer = malloc(num_hidden * sizeof(double));
-    double* output_layer = malloc(num_output * sizeof(double)); 
+    double* hidden_layer;// = malloc(num_hidden * sizeof(double));
+    double* output_layer;// = malloc(num_output * sizeof(double)); 
 
-    double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
-    double* output_layer_bias = malloc(num_output * sizeof(double)); 
+    double* hidden_layer_bias;// = malloc(num_hidden * sizeof(double)); 
+    double* output_layer_bias;// = malloc(num_output * sizeof(double)); 
 
     
     double** hidden_layer_weights;// = malloc(num_inputs * sizeof(double*));
