@@ -171,7 +171,7 @@ void train_network(
     //convert_images_to_training_data(path, training_inputs, training_outputs);
 
     // Init weights and biases
-    /*
+    
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
             hidden_layer_weights[i][j] = init_weight_bias();
@@ -191,7 +191,7 @@ void train_network(
     }
     */
     printf("Training network...\n");
-    /*
+    
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
 	
@@ -253,13 +253,13 @@ void train_network(
             }
         }
     }
-    */
-    /*
+    
+    
     printf("\nTraining is done!\n");
     char path[] = "bin/weights_biases.txt";
     save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
 	printf("Weights and biases saved.\n");
-    */
+    
 }
 
 /*
