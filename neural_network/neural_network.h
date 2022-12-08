@@ -55,6 +55,9 @@ double training_outputs[num_training_sets][num_output] = {
 --------------------------------
 */
 
+double training_outputs[num_training_sets][num_output];
+char training_inputs[num_training_sets][20];
+
 
 /*
     Helper functions:
