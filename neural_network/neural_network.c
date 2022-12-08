@@ -270,11 +270,11 @@ int main(){
     double* hidden_layer_bias = calloc(num_hidden, sizeof(double)); 
     double* output_layer_bias = calloc(num_output, sizeof(double)); 
 
-    double* hidden_layer_weights = calloc(num_inputs, num_hidden * sizeof(double));
+    double* hidden_layer_weights[num_inputs];
     for (int i = 0; i < num_inputs; i++){
         hidden_layer_weights[i] = calloc(num_hidden, sizeof(double));
     }
-    double* output_layer_weights = calloc(num_hidden, num_output * sizeof(double));
+    double* output_layer_weights[num_hidden];
     for (int i = 0; i < num_hidden; i++){
         output_layer_weights[i] = calloc(num_output, sizeof(double));
     }
