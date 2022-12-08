@@ -306,9 +306,9 @@ int *main(){
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
-
     }
     
+    printf("Treating grid...\n");
     static int grid[81];
     /*
     for (int i = 0; i < 81; i++){
