@@ -192,6 +192,7 @@ int train_network(
     }
 
     printf("Training network...\n");
+    /*
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < 100; i++){
 	    printf("1");
@@ -260,7 +261,7 @@ int train_network(
             printf("9");
         }
     }
-
+    */
     printf("\nTraining is done!\n");
     return 1;
 }
