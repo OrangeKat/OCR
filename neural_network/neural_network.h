@@ -21,7 +21,7 @@ const double learning_rate = 0.1f;
 /*
         Training data:
 --------------------------------
-*/
+
 char training_inputs[num_training_sets][20] = {
     "images/0.png",
     "images/1.png",
@@ -34,10 +34,10 @@ char training_inputs[num_training_sets][20] = {
     "images/8.png",
     "images/9.png"
 };
-/*
+
         (Training input)
 --------------------------------
-*/
+
 double training_outputs[num_training_sets][num_output] = {
     {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
     {0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
@@ -50,7 +50,7 @@ double training_outputs[num_training_sets][num_output] = {
     {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f},
     {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
 };
-/*
+
         (Training output)
 --------------------------------
 */
