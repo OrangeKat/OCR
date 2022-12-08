@@ -16,21 +16,6 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
     return resized_image;
 }
 
-void surface_to_grayscale(SDL_Surface* surface)
-{
-    Uint32* pixels = surface->pixels;
-    int len = surface->w * surface->h;
-    SDL_PixelFormat* format = surface->format;
-    SDL_LockSurface(surface);
-    int count = 0 ;
-    while (count < len)
-    {
-        Uint32 color = pixel_to_grayscale(pixels[count], format);
-        pixels[count] = color;
-        count++;
-    }
-}
-
 // Function that converts a black and white image to a array of 0s and 1s
 double *convert_to_array(char path[]){
     SDL_Surface *image = IMG_Load(path);
