@@ -300,10 +300,10 @@ int main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        //int epochs = 100000;
+        int epochs = 100000;
         // Init weights and biases and train network
-        //train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
-        //    hidden_layer_weights, output_layer_weights);
+        train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
+            hidden_layer_weights, output_layer_weights);
 
     }
     
