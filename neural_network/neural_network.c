@@ -301,7 +301,7 @@ int *main(){
     char answer;
     printf("Load weights and biases? (y/n): \n");
     scanf("%c", &answer);
-
+    printf("n");
     if (answer == 'y'){
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
@@ -309,7 +309,7 @@ int *main(){
 	printf("Weights and biases loaded and set.\n");
     } 
     else {
-        int epochs = 100000;
+        //int epochs = 100000;
         //char path[] = "bin/train.txt";
 
         // Init weights and biases and train network
