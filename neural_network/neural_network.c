@@ -293,7 +293,7 @@ int* main(){
     char answer;
     printf("Load weights and biases? (y/n): \n");
     scanf("%c", &answer);
-    printf("0");
+    
     if (answer == 'y'){
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
