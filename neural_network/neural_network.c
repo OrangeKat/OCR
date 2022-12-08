@@ -218,7 +218,7 @@ int train_network(
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
                 double error = input[j] - *output_layer[j];
-                delta_output[j] = error * sigmoid_derivative(output_layer[j]);
+                delta_output[j] = error * sigmoid_derivative(*output_layer[j]);
             }
 
             //Compute change in hidden weights
@@ -264,7 +264,7 @@ int train_network(
 
 int main(){
 
-    double* hidden_layer[num_hidden] = calloc(num_hidden, sizeof(double));
+    double* hidden_layer = calloc(num_hidden, sizeof(double));
     double* output_layer = calloc(num_output, sizeof(double)); 
 
     double* hidden_layer_bias = calloc(num_hidden, sizeof(double)); 
@@ -272,11 +272,11 @@ int main(){
 
     double* hidden_layer_weights = calloc(num_inputs, num_hidden * sizeof(double));
     for (int i = 0; i < num_inputs; i++){
-        *hidden_layer_weights[i] = calloc(num_hidden, sizeof(double));
+        hidden_layer_weights[i] = calloc(num_hidden, sizeof(double));
     }
     double* output_layer_weights = calloc(num_hidden, num_output * sizeof(double));
     for (int i = 0; i < num_hidden; i++){
-        *output_layer_weights[i] = calloc(num_output, sizeof(double));
+        output_layer_weights[i] = calloc(num_output, sizeof(double));
     }
 
     // Ask to load weights and biases or init new ones
