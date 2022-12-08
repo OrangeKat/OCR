@@ -93,7 +93,7 @@ int train_network(
     double* output_layer_weights,//[num_hidden][num_output]
     );
 void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
-    double* hidden_layer_weights, double training_input);
+    double* hidden_layer_weights, double training_input[num_inputs]);
 void compute_output_layer(double* output_layer, double* output_layer_bias, 
     double* output_layer_weights, double* hidden_layer);
 
