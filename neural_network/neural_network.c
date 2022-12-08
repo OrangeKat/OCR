@@ -316,8 +316,8 @@ int *main(){
 
     }
 
-    /*
     int grid[81];
+    /*
     for (int i = 0; i < 81; i++){
         // Find out the number in the image (input: image of cell, output: number)
         char input[20];
@@ -351,9 +351,9 @@ int *main(){
     int index = 0;
     for (int n = 0; n < num_output; n++){
         if (output_layer[i] > output_layer[index]){
-            index = i
+            index = i;
         }
     }
     printf("%d\n", i);
-    return;
+    return grid;
 }
