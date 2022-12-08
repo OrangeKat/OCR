@@ -16,24 +16,18 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
     return resized_image;
 }
 
-// Function that gets a pixels rgb values
-Uint32 getpixel(SDL_Surface *surface, int x, int y){
-    int bpp = surface->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-    switch(bpp){
-        case 1:
-            return *p;
-        case 2:
-            return *(Uint16 *)p;
-        case 3:
-            if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
-                return p[0] << 16 | p[1] << 8 | p[2];
-            else
-                return p[0] | p[1] << 8 | p[2] << 16;
-        case 4:
-            return *(Uint32 *)p;
-        default:
-            return 0;
+void surface_to_grayscale(SDL_Surface* surface)
+{
+    Uint32* pixels = surface->pixels;
+    int len = surface->w * surface->h;
+    SDL_PixelFormat* format = surface->format;
+    SDL_LockSurface(surface);
+    int count = 0 ;
+    while (count < len)
+    {
+        Uint32 color = pixel_to_grayscale(pixels[count], format);
+        pixels[count] = color;
+        count++;
     }
 }
 
@@ -43,13 +37,15 @@ double *convert_to_array(char path[]){
     image = resize_image(image, res);
     int height = image->h;
     int width = image->w;
+    Uint32* pixels = image->pixels;
     static double array[num_inputs];
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
-            Uint32 pixel = getpixel(image,res,res);
-            SDL_Color rgb;
-            SDL_GetRGB(pixel, image->format, &rgb.r, &rgb.g, &rgb.b);
-            if (rgb.r == 0 && rgb.g == 0 && rgb.b == 0){
+
+            Uint8 r, g, b;
+            SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
+
+            if (r == 0 && g == 0 && b == 0){
                 array[i * height + j] = 1.0f;
             } else {
                 array[i * height + j] = 0.0f;
@@ -58,20 +54,5 @@ double *convert_to_array(char path[]){
     }
     SDL_FreeSurface(image);
     return array;
-}
-
-void main(){
-    SDL_Init(SDL_INIT_VIDEO);
-    
-    SDL_Surface *image = IMG_Load("images/1.png");
-    image = resize_image(image, res);
-    SDL_SaveBMP(image, "images/test.bmp");
-    double *array = convert_to_array("images/1.png");
-    for (int i = 0; i < num_inputs; i++){
-        if (i % res == 0)
-            printf("\n");
-        printf("%f ", array[i]);
-    }
-    printf("\n");
 }
 
