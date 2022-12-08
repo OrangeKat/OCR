@@ -11,12 +11,12 @@
     - number of training sets
 */
 
-int num_inputs = 256;
-int num_hidden = 256;
-int num_output = 10;
+const int num_inputs = 256;
+const int num_hidden = 256;
+const int num_output = 10;
 const double learning_rate = 0.1f;
-int res =  16;
-int num_training_sets = 10;
+const int res =  16;
+const int num_training_sets = 10;
 
 /*
         Training data:
