@@ -278,7 +278,7 @@ int train_network(
     - Compute Output lair 
 */
 
-int main(){
+int *main(){
 
     double* hidden_layer = malloc(num_hidden * sizeof(double));
     double* output_layer = malloc(num_output * sizeof(double)); 
@@ -316,24 +316,7 @@ int main(){
 
     }
 
-    char input[10] = "grid/";
-
-    /*                  COMMENT OUT WHEN *NOT* TESTING
-    -------------------------------------------------------------------------
-    
-    printf("Enter path where image is located: \n");
-     
-    scanf("%99s", input);
-    DIR *dir = opendir(input);
-    while (dir == NULL){
-        printf("Invalid path. Enter path where image set is located: \n");
-        scanf("%99s", input);
-        dir = opendir(input);
-    }
-    free(dir);
-    
-    -------------------------------------------------------------------------
-    */
+    /*
     int grid[81];
     for (int i = 0; i < 81; i++){
         // Find out the number in the image (input: image of cell, output: number)
@@ -348,11 +331,29 @@ int main(){
         // Find the index of the highest value in the output layer
         int index = 0;
         for (int n = 0; n < num_output; n++){
-            if (output_layer[i] > output_layer[index]){
-                grid[i] = n;
+            if (output_layer[n] > output_layer[index]){
+                index = n;
             }
         }
+        grid[i] = index;
     }
 
     return grid;
+    */
+    int i = 0;
+    double input_cell[num_inputs];
+    memcpy(input_cell, convert_to_array("images/1.png"), sizeof(double) * num_inputs);
+    // Compute Hidden lair
+    compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
+    // Compute Output lair
+    compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+    // Find the index of the highest value in the output layer
+    int index = 0;
+    for (int n = 0; n < num_output; n++){
+        if (output_layer[i] > output_layer[index]){
+            index = i
+        }
+    }
+    printf("%d\n", i);
+    return;
 }
