@@ -69,7 +69,7 @@ void save_weights_and_biases(char path[], double** hidden_layer_weights,
         fprintf(fp, "%lf, ", output_layer_bias[i]);
     }
     fclose(fp);
-
+    free(fp);
 }
 
 void load_weights_and_biases(char path[], double** hidden_layer_weights, 
@@ -103,6 +103,8 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     }
     fscanf(fp, "\n");
     fclose(fp);
+    free(p);
+    free(fp);
 }
 
 // Function that converts images into training data
@@ -332,6 +334,7 @@ int main(){
         scanf("%99s", input);
         dir = opendir(input);
     }
+    free(dir);
     /*
     -------------------------------------------------------------------------
     */
@@ -350,5 +353,16 @@ int main(){
             index = i;
         }
     }
+    free(hidden_layer);
+    free(output_layer);
+    free(hidden_layer_bias);
+    free(output_layer_bias);
+    for (int i = 0; i < num_inputs; i++){
+        free(hidden_layer_weights[i]);
+    }
+    for (int i = 0; i < num_hidden; i++){
+        free(output_layer_weights[i]);
+    }
+
     return index;
 }
