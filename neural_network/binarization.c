@@ -61,9 +61,9 @@ double *convert_to_array(char path[]){
 }
 
 void main(){
-    SDL_surface *image = IMG_Load("images/1.png");
+    SDL_Surface *image = IMG_Load("images/1.png");
     image = resize_image(image, res);
-    SDL_window *window = SDL_CreateWindow("Image", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 100, 100, 0);
+    SDL_Window *window = SDL_CreateWindow("Image", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 100, 100, 0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
     double *array = convert_to_array("images/1.png");
