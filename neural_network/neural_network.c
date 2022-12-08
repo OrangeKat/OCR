@@ -102,7 +102,6 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     }
     fscanf(fp, "\n");
     fclose(fp);
-    free(p);
 }
 
 // Function that converts images into training data
@@ -204,6 +203,7 @@ int train_network(
         for (int i = 0; i < num_training_sets; i++){
             training_set_order[i] = i;
         }
+        
         shuffle(training_set_order, num_training_sets);
 
         //Iterate through all training sets
@@ -272,23 +272,23 @@ int train_network(
 
 int *main(){
 
-    double* hidden_layer;// = malloc(num_hidden * sizeof(double));
-    double* output_layer;// = malloc(num_output * sizeof(double)); 
+    double* hidden_layer = malloc(num_hidden * sizeof(double));
+    double* output_layer = malloc(num_output * sizeof(double)); 
 
-    double* hidden_layer_bias;// = malloc(num_hidden * sizeof(double)); 
-    double* output_layer_bias;// = malloc(num_output * sizeof(double)); 
+    double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
+    double* output_layer_bias = malloc(num_output * sizeof(double)); 
 
     
-    double** hidden_layer_weights;// = malloc(num_inputs * sizeof(double*));
-    //for (int i = 0; i < num_inputs; i++){
-    //    hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
-    //}
-    double** output_layer_weights;// = malloc(num_hidden * sizeof(double*));
-    //for (int i = 0; i < num_hidden; i++){
-    //    output_layer_weights[i] = malloc(num_output * sizeof(double));
-    //}
+    double** hidden_layer_weights = malloc(num_inputs * sizeof(double*));
+    for (int i = 0; i < num_inputs; i++){
+        hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
+    }
+    double** output_layer_weights = malloc(num_hidden * sizeof(double*));
+    for (int i = 0; i < num_hidden; i++){
+        output_layer_weights[i] = malloc(num_output * sizeof(double));
+    }
+
     
-    /*
     // Ask to load weights and biases or init new ones
     char answer[2];
     printf("Load weights and biases? (y/n): \n");
@@ -301,15 +301,15 @@ int *main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        //int epochs = 100000;
-        //char path[] = "bin/train.txt";
+        int epochs = 100000;
+        char path[] = "bin/train.txt";
 
         // Init weights and biases and train network
-        //train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
-        //    hidden_layer_weights, output_layer_weights);
+        train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
+            hidden_layer_weights, output_layer_weights);
 
     }
-    */
+    
     static int grid[81];
     /*
     for (int i = 0; i < 81; i++){
