@@ -292,7 +292,7 @@ int* main(){
     // Ask to load weights and biases or init new ones
     char answer;
     printf("Load weights and biases? (y/n): \n");
-    scanf("%c", answer);
+    scanf("%c", &answer);
     printf("0");
     if (answer == 'y'){
         // Load weights and biases
