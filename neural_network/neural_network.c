@@ -157,7 +157,7 @@ void compute_output_layer(double* output_layer[], double* output_layer_bias[],
 
 // Train neural network
 int train_network(
-    int epochs, char path[], 
+    int epochs, 
     double* hidden_layer[num_hidden],
     double* output_layer[num_output], 
     double* hidden_layer_bias[num_hidden], 
@@ -165,26 +165,41 @@ int train_network(
     double** hidden_layer_weights[num_inputs][num_hidden], 
     double** output_layer_weights[num_hidden][num_output]
     ){
-
+    printf("Setting weights and biases...\n");
     // Deprecated doesnt work (TO FIX)
     //convert_images_to_training_data(path, training_inputs, training_outputs);
+    
+
+    double tmp_hidden_weights[num_inputs][num_hidden];
+    double tmp_output_weights[num_hidden][num_output];
+    double tmp_hidden_bias[num_hidden];
+    double tmp_output_bias[num_output];
 
     // Init weights and biases
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
-            **hidden_layer_weights[i][j] = init_weight_bias();
+            tmp_hidden_weights[i][j] = init_weight_bias();
+	    
         }
     }
+    
     for (int i = 0; i < num_hidden; i++) {
-        *hidden_layer_bias[i] = init_weight_bias();
+        tmp_hidden_bias[i] = init_weight_bias();
         for (int j = 0; j < num_output; j++) {
-            **output_layer_weights[i][j] = init_weight_bias();
+            tmp_output_weights[i][j] = init_weight_bias();
         }
-    }
-    for (int i = 0; i < num_output; i++) {
-        *output_layer_bias[i] = init_weight_bias();
     }
 
+    for (int i = 0; i < num_output; i++) {
+        tmp_output_bias[i] = init_weight_bias();
+    }
+    
+    memcpy(hidden_layer_bias, tmp_hidden_bias, sizeof(double)*num_hidden);
+    memcpy(output_layer_bias, tmp_output_bias, sizeof(double)*num_output);
+    memcpy(hidden_layer_weights, tmp_hidden_weights, sizeof(double)*num_inputs);
+    memcpy(output_layer_weights, tmp_output_weights, sizeof(double)*num_hidden);
+    
+    printf("Training network..\n.");
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
 	
@@ -202,7 +217,8 @@ int train_network(
         for(int n = 0; n < num_training_sets; n++){
             int k = training_set_order[n];
 
-            double input[num_inputs] = convert_to_array(training_inputs[k]);
+            double input[num_inputs];
+	    memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
 
             //Compute hidden layer
             compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
@@ -239,12 +255,14 @@ int train_network(
             for (int j = 0; j < num_hidden; j++){
                 *hidden_layer_bias[j] += delta_hidden[j];
                 for (int p = 0; p < num_inputs; p++){
-                    **hidden_layer_weights[p][j] += training_inputs[k][p] * delta_hidden[j] * learning_rate;
+                    **hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
         }
     }
-    printf("\n");
+
+
+    printf("\nTraining is done!\n");
     return 1;
 }
 
@@ -281,10 +299,10 @@ int main(){
     } 
     else {
         int epochs = 100000;
-        char path[] = "bin/train.txt";
+        //char path[] = "bin/train.txt";
 
         // Init weights and biases and train network
-        train_network(epochs, path, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
+        train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
 
 	printf("Done training and weights and biases set.\n");
@@ -316,7 +334,8 @@ int main(){
     */
 
     // Find out the number in the image (input: image of cell, output: number)
-    double input_cell[] = convert_to_array(input);
+    double input_cell[num_inputs];
+    memcpy(input_cell, convert_to_array(input), sizeof(double) * num_inputs);
     // Compute Hidden lair
     compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
     // Compute Output lair
