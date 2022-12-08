@@ -286,15 +286,16 @@ int *main(){
     double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
     double* output_layer_bias = malloc(num_output * sizeof(double)); 
 
-    double** hidden_layer_weights = malloc(num_inputs * sizeof(double*));
-    for (int i = 0; i < num_inputs; i++){
-        hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
-    }
-    double** output_layer_weights = malloc(num_hidden * sizeof(double*));
-    for (int i = 0; i < num_hidden; i++){
-        output_layer_weights[i] = malloc(num_output * sizeof(double));
-    }
-
+    
+    double** hidden_layer_weights;// = malloc(num_inputs * sizeof(double*));
+    //for (int i = 0; i < num_inputs; i++){
+    //    hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
+    //}
+    double** output_layer_weights;// = malloc(num_hidden * sizeof(double*));
+    //for (int i = 0; i < num_hidden; i++){
+    //    output_layer_weights[i] = malloc(num_output * sizeof(double));
+    //}
+    
 
     // Ask to load weights and biases or init new ones
     char answer;
@@ -342,12 +343,16 @@ int *main(){
     return grid;
     */
     int i = 0;
+    printf("1");
     double input_cell[num_inputs];
     memcpy(input_cell, convert_to_array("images/1.png"), sizeof(double) * num_inputs);
+    printf("2");
     // Compute Hidden lair
     compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
+    printf("3");
     // Compute Output lair
     compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+    printf("4");
     // Find the index of the highest value in the output layer
     int index = 0;
     for (int n = 0; n < num_output; n++){
