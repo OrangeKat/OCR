@@ -271,7 +271,7 @@ void train_network(
     - Compute Output lair 
 */
 
-int main(){
+int *main(){
 
     double* hidden_layer = malloc(num_hidden * sizeof(double));
     double* output_layer = malloc(num_output * sizeof(double)); 
