@@ -190,7 +190,7 @@ int train_network(
         output_layer_bias[i] = init_weight_bias();
     }
 
-    printf("Training network..\n.");
+    printf("Training network...\n");
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < 100; i++){
 	    printf("1");
