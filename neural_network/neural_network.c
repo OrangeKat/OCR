@@ -280,19 +280,19 @@ int train_network(
 
 int main(){
 
-    double* hidden_layer = calloc(num_hidden, sizeof(double));
-    double* output_layer = calloc(num_output, sizeof(double)); 
+    double* hidden_layer = malloc(num_hidden * sizeof(double));
+    double* output_layer = malloc(num_output * sizeof(double)); 
 
-    double* hidden_layer_bias = calloc(num_hidden, sizeof(double)); 
-    double* output_layer_bias = calloc(num_output, sizeof(double)); 
+    double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
+    double* output_layer_bias = malloc(num_output * sizeof(double)); 
 
     double* hidden_layer_weights[num_inputs];
     for (int i = 0; i < num_inputs; i++){
-        hidden_layer_weights[i] = calloc(num_hidden, sizeof(double));
+        hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
     }
     double* output_layer_weights[num_hidden];
     for (int i = 0; i < num_hidden; i++){
-        output_layer_weights[i] = calloc(num_output, sizeof(double));
+        output_layer_weights[i] = malloc(num_output * sizeof(double));
     }
 
     // Ask to load weights and biases or init new ones
@@ -316,7 +316,7 @@ int main(){
 
     }
 
-    char input[100] = "images/1.png";
+    char input[10] = "grid/";
 
     /*                  COMMENT OUT WHEN *NOT* TESTING
     -------------------------------------------------------------------------
@@ -334,21 +334,25 @@ int main(){
     
     -------------------------------------------------------------------------
     */
-
-    // Find out the number in the image (input: image of cell, output: number)
-    double input_cell[num_inputs];
-    memcpy(input_cell, convert_to_array(input), sizeof(double) * num_inputs);
-    // Compute Hidden lair
-    compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
-    // Compute Output lair
-    compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
-    // Find the index of the highest value in the output layer
-    int index = 0;
-    for (int i = 0; i < num_output; i++){
-        if (output_layer[i] > output_layer[index]){
-            index = i;
+    int grid[81];
+    for (int i = 0; i < 81; i++){
+        // Find out the number in the image (input: image of cell, output: number)
+        char input[20];
+        sprintf(input, "grid/%d.png", i);
+        double input_cell[num_inputs];
+        memcpy(input_cell, convert_to_array(input), sizeof(double) * num_inputs);
+        // Compute Hidden lair
+        compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
+        // Compute Output lair
+        compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+        // Find the index of the highest value in the output layer
+        int index = 0;
+        for (int n = 0; n < num_output; n++){
+            if (output_layer[i] > output_layer[index]){
+                grid[i] = n;
+            }
         }
     }
-    printf("The number is: %d\n", index);
-    return index;
+
+    return grid;
 }
