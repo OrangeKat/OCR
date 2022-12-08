@@ -286,14 +286,15 @@ int *main(){
     double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
     double* output_layer_bias = malloc(num_output * sizeof(double)); 
 
-    double* hidden_layer_weights[num_inputs][num_hidden];
+    double** hidden_layer_weights = malloc(num_inputs * sizeof(double*));
     for (int i = 0; i < num_inputs; i++){
         hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
     }
-    double* output_layer_weights[num_hidden][num_output];
+    double** output_layer_weights = malloc(num_hidden * sizeof(double*));
     for (int i = 0; i < num_hidden; i++){
         output_layer_weights[i] = malloc(num_output * sizeof(double));
     }
+
 
     // Ask to load weights and biases or init new ones
     char answer;
