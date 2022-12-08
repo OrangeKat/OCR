@@ -193,7 +193,7 @@ int train_network(
     printf("Training network..\n.");
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
-	printf("1")
+	printf("1");
 	if (i % (epochs / 100) == 0)
 	    printf("|");
 	    
@@ -203,7 +203,7 @@ int train_network(
             training_set_order[i] = i;
         }
         shuffle(training_set_order, num_training_sets);
-        printf("2")
+        printf("2");
 
         //Iterate through all training sets
         for(int n = 0; n < num_training_sets; n++){
@@ -211,15 +211,15 @@ int train_network(
 
             double input[num_inputs];
 	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
-            printf("3")
+            printf("3");
 
             //Compute hidden layer
             compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
-            printf("4")
+            printf("4");
 
             //Compute output layer
             compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
-            printf("5")
+            printf("5");
 
             //Compute change in output layer
             double delta_output[num_output];
@@ -227,7 +227,7 @@ int train_network(
                 double error = input[j] - output_layer[j];
                 delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
-            printf("6")
+            printf("6");
 
             //Compute change in hidden weights
             double delta_hidden[num_hidden];
@@ -238,7 +238,7 @@ int train_network(
                 }
                 delta_hidden[j] = error * sigmoid_derivative(hidden_layer[j]);
             }
-            printf("7")
+            printf("7");
 
             //Update output weights
             for (int j = 0; j < num_output; j++){
@@ -247,7 +247,7 @@ int train_network(
                     output_layer_weights[p][j] += hidden_layer[p] * delta_output[j] * learning_rate;
                 }
             }
-            printf("8")
+            printf("8");
 
             //Update hidden weights
             for (int j = 0; j < num_hidden; j++){
@@ -256,7 +256,7 @@ int train_network(
                     hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
-            printf("9")
+            printf("9");
         }
     }
 
