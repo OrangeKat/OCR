@@ -30,7 +30,7 @@ double *convert_to_array(char path[]){
             Uint8 r, g, b;
             SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
 
-            if (r == 0 && g == 0 && b == 0){
+            if ((r + g + b) / 3 < 128){
                 array[i * height + j] = 1.0f;
             } else {
                 array[i * height + j] = 0.0f;
@@ -43,6 +43,14 @@ double *convert_to_array(char path[]){
 
 void main(){
     double *array = convert_to_array("bin/training_set/1.png");
+    SDL_Surface *image = IMG_Load("bin/training_set/1.png");
+    image = resize_image(image, res);
+    SDL_SaveBMP(image, "bin/1.bmp");
+    image = IMG_Load("bin/training_set/1.png");
+    for (int i = 64; i < res; i-=8){
+        image = resize_image(image, i);
+    }
+    SDL_SaveBMP(image, "bin/2.bmp");
     for (int i = 0; i < num_inputs; i++){
         if (i % res == 0)
             printf("\n");
