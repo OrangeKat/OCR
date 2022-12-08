@@ -37,12 +37,12 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y){
 }
 
 // Function that converts a black and white image to a array of 0s and 1s
-double *convert_to_array(char path[]){
+double convert_to_array(char path[]){
     SDL_Surface *image = IMG_Load(path);
     resize_image(image, res);
     int height = image->h;
     int width = image->w;
-    static double array[num_inputs];
+    double *array = malloc(height * width * sizeof(int *));
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             Uint32 pixel = getpixel(image,i,j);
@@ -55,6 +55,6 @@ double *convert_to_array(char path[]){
             }
         }
     }
-    return array;
+    return *array;
 }
 

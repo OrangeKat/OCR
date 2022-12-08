@@ -130,8 +130,8 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 */ 
 
 // Compute hidden layer
-void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[], 
-    double* hidden_layer_weights[num_inputs][num_hidden], double training_input[num_hidden]){
+void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
+    double* hidden_layer_weights, double training_input){
     
     for (int j = 0; j < num_hidden; j++){
         double activation = *hidden_layer_bias[j];
@@ -143,8 +143,8 @@ void compute_hidden_layer(double* hidden_layer[], double* hidden_layer_bias[],
 }
 
 // Compute output layer
-void compute_output_layer(double* output_layer[], double* output_layer_bias[], 
-    double* output_layer_weights[num_hidden][num_output], double* hidden_layer[]){
+void compute_output_layer(double* output_layer, double* output_layer_bias, 
+    double* output_layer_weights, double* hidden_layer){
 
     for (int j = 0; j < num_output; j++){
         double activation = *output_layer_bias[j];
@@ -158,12 +158,12 @@ void compute_output_layer(double* output_layer[], double* output_layer_bias[],
 // Train neural network
 int train_network(
     int epochs, 
-    double* hidden_layer[num_hidden],
-    double* output_layer[num_output], 
-    double* hidden_layer_bias[num_hidden], 
-    double* output_layer_bias[num_output], 
-    double* hidden_layer_weights[num_inputs][num_hidden], 
-    double* output_layer_weights[num_hidden][num_output]
+    double* hidden_layer,//[num_hidden],
+    double* output_layer,//[num_output], 
+    double* hidden_layer_bias,//[num_hidden], 
+    double* output_layer_bias,//[num_output], 
+    double* hidden_layer_weights,//[num_inputs][num_hidden], 
+    double* output_layer_weights,//[num_hidden][num_output]
     ){
     printf("Setting weights and biases...\n");
     // Deprecated doesnt work (TO FIX)
@@ -275,8 +275,7 @@ int train_network(
 int main(){
 
     double* hidden_layer = calloc(num_hidden, sizeof(double));
-    double* output_layer[num_output];
-    output_layer = calloc(sizeof(double) * num_output); 
+    double* output_layer = calloc(num_output, sizeof(double)); 
 
     double* hidden_layer_bias[num_hidden]; 
     double* output_layer_bias[num_output]; 
