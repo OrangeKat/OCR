@@ -49,7 +49,7 @@ double *convert_to_array(char path[]){
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             Uint32 pixel = getpixel(image,res,res);
-            SDL_color rgb;
+            SDL_Color rgb;
             SDL_GetRGB(pixel, image->format, &rgb.r, &rgb.g, &rgb.b);
             if (rgb.r == 0 && rgb.g == 0 && rgb.b == 0){
                 array[i * height + j] = 1.0f;
