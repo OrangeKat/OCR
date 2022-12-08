@@ -192,9 +192,9 @@ int train_network(
 
     printf("Training network..\n.");
     //Iterate through all training sets for a number of epochs
-    for (int i = 0; i < epochs; i++){
+    for (int i = 0; i < 100; i++){
 	    printf("1");
-	    if (i % (epochs / 100) == 0)
+	    if (i % (100 / 100) == 0)
 	        printf("|");
 	    
         //Rearrange training sets in random order
