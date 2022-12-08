@@ -311,12 +311,12 @@ int main(){
         //char path[] = "bin/train.txt";
 
         // Init weights and biases and train network
-        train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
-            hidden_layer_weights, output_layer_weights);
+        //train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
+        //    hidden_layer_weights, output_layer_weights);
 
     }
 
-    char input[100];
+    char input[100] = "images/1.png";
 
     /*                  COMMENT OUT WHEN *NOT* TESTING
     -------------------------------------------------------------------------
@@ -349,16 +349,6 @@ int main(){
             index = i;
         }
     }
-    free(hidden_layer);
-    free(output_layer);
-    free(hidden_layer_bias);
-    free(output_layer_bias);
-    for (int i = 0; i < num_inputs; i++){
-        free(hidden_layer_weights[i]);
-    }
-    for (int i = 0; i < num_hidden; i++){
-        free(output_layer_weights[i]);
-    }
-
+    printf("The number is: %d\n", index);
     return index;
 }
