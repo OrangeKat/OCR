@@ -314,10 +314,9 @@ int main(){
         scanf("%c", &answer);
 
         if (answer == 'y'){
-            printf("Enter path where to save weights and biases: \n");
             char path[] = "bin/weights_biases.txt";
             save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	    printf("Weights and biases saved.\n");
+	        printf("Weights and biases saved.\n");
         }
     }
 
