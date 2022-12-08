@@ -296,7 +296,7 @@ int *main(){
     //    output_layer_weights[i] = malloc(num_output * sizeof(double));
     //}
     
-
+    /*
     // Ask to load weights and biases or init new ones
     char answer[2];
     printf("Load weights and biases? (y/n): \n");
@@ -317,7 +317,7 @@ int *main(){
         //    hidden_layer_weights, output_layer_weights);
 
     }
-
+    */
     static int grid[81];
     /*
     for (int i = 0; i < 81; i++){
