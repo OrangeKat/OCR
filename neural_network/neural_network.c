@@ -298,7 +298,7 @@ int *main(){
     
 
     // Ask to load weights and biases or init new ones
-    char answer = 'n';
+    char answer[2] = 'n';
     printf("Load weights and biases? (y/n): \n");
     //scanf("%c", &answer);
     printf("0");
@@ -306,7 +306,7 @@ int *main(){
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
         load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	printf("Weights and biases loaded and set.\n");
+	    printf("Weights and biases loaded and set.\n");
     } 
     else {
         //int epochs = 100000;
