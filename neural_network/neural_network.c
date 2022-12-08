@@ -132,11 +132,11 @@ void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias,
     double** hidden_layer_weights, double training_input[num_inputs]){
     
     for (int j = 0; j < num_hidden; j++){
-        double activation = *hidden_layer_bias[j];
+        double activation = hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * **hidden_layer_weights[p][j];
+            activation += training_input[p] * hidden_layer_weights[p][j];
         }
-        *hidden_layer[j] = sigmoid(activation);
+        hidden_layer[j] = sigmoid(activation);
     }
 }
 
