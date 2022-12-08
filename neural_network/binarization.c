@@ -58,7 +58,6 @@ double *convert_to_array(char path[]){
             }
         }
     }
-    SDL_DestroyTexture(image);
     free(image);
     return array;
 }
