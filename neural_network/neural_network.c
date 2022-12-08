@@ -295,9 +295,9 @@ int main(){
     
     if (*answer == 'y'){
         // Load weights and biases
-        //char path[] = "bin/weights_biases.txt";
-        //load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	    //printf("Weights and biases loaded and set.\n");
+        char path[] = "bin/weights_biases.txt";
+        load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
+	    printf("Weights and biases loaded and set.\n");
     } 
     else {
         //int epochs = 100000;
