@@ -22,17 +22,17 @@ const double learning_rate = 0.001f;
         Training data:
 --------------------------------
 */
-char training_inputs[num_training_sets][20] = {
-    "images/0.png",
-    "images/1.png",
-    "images/2.png",
-    "images/3.png",
-    "images/4.png",
-    "images/5.png",
-    "images/6.png",
-    "images/7.png",
-    "images/8.png",
-    "images/9.png"
+char training_inputs[num_training_sets][25] = {
+    "bin/training_set/0.png",
+    "bin/training_set/1.png",
+    "bin/training_set/2.png",
+    "bin/training_set/3.png",
+    "bin/training_set/4.png",
+    "bin/training_set/5.png",
+    "bin/training_set/6.png",
+    "bin/training_set/7.png",
+    "bin/training_set/8.png",
+    "bin/training_set/9.png"
 };
 /*
         (Training input)

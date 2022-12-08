@@ -333,7 +333,7 @@ int *main(){
     */
     
     double input_cell[num_inputs];
-    memcpy(input_cell, convert_to_array("images/1.png"), sizeof(double) * num_inputs);
+    memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
     // Compute Hidden lair
     compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
     // Compute Output lair
