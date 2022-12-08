@@ -322,11 +322,13 @@ int main(){
         }
     }
 
+    char input[100] = "images/1.png";
+
     /*                  COMMENT OUT WHEN *NOT* TESTING
     -------------------------------------------------------------------------
-    */
+    
     printf("Enter path where image is located: \n");
-    char input[100]; 
+     
     scanf("%99s", input);
     DIR *dir = opendir(input);
     while (dir == NULL){
@@ -335,7 +337,7 @@ int main(){
         dir = opendir(input);
     }
     free(dir);
-    /*
+    
     -------------------------------------------------------------------------
     */
 
