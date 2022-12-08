@@ -77,7 +77,7 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     
     FILE *fp;
     fp = fopen(path, "r");
-    double *p;
+    double *p = malloc(sizeof(double));
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
             fscanf(fp, "%lf, ", p);
