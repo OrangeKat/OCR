@@ -193,9 +193,9 @@ int train_network(
     printf("Training network...\n");
     
     //Iterate through all training sets for a number of epochs
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < epochs; i++){
 	
-	    if (i % (100 / 100) == 0)
+	    if (i % (epochs / 100) == 0)
 	        printf("|");
 	    
         //Rearrange training sets in random order
@@ -203,7 +203,7 @@ int train_network(
         for (int i = 0; i < num_training_sets; i++){
             training_set_order[i] = i;
         }
-        
+
         shuffle(training_set_order, num_training_sets);
 
         //Iterate through all training sets
@@ -270,7 +270,7 @@ int train_network(
     - Compute Output lair 
 */
 
-int *main(){
+int* main(){
 
     double* hidden_layer = malloc(num_hidden * sizeof(double));
     double* output_layer = malloc(num_output * sizeof(double)); 
@@ -290,7 +290,7 @@ int *main(){
 
     
     // Ask to load weights and biases or init new ones
-    char answer[2];
+    char answer;
     printf("Load weights and biases? (y/n): \n");
     scanf("%c", answer);
     printf("0");
@@ -302,8 +302,6 @@ int *main(){
     } 
     else {
         int epochs = 100000;
-        char path[] = "bin/train.txt";
-
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
