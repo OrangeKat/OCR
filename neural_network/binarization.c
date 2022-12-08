@@ -42,7 +42,7 @@ double *convert_to_array(char path[]){
     resize_image(image, res);
     int height = image->h;
     int width = image->w;
-    static double array[height * width];
+    static double array[num_inputs];
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             Uint32 pixel = getpixel(image,i,j);
