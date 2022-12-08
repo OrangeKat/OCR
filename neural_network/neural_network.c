@@ -187,7 +187,6 @@ void train_network(
 
     for (int i = 0; i < num_output; i++) {
         output_layer_bias[i] = init_weight_bias();
-        printf("%lf, ", output_layer_bias[i]);
     }
     
     printf("Training network...\n");
@@ -195,8 +194,7 @@ void train_network(
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
 	
-	    if (i % (epochs / 100) == 0)
-	        printf("|");
+	    printf("Epoch %d\n", i);
 	    
         //Rearrange training sets in random order
         int training_set_order[num_training_sets];
