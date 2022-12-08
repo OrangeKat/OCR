@@ -42,9 +42,7 @@ double *convert_to_array(char path[]){
     SDL_Surface *image = IMG_Load(path);
     image = resize_image(image, res);
     int height = image->h;
-    printf("%d\n",height);
     int width = image->w;
-    printf("%d\n",width);
     static double array[num_inputs];
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
