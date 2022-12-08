@@ -157,7 +157,7 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
 }
 
 // Train neural network
-int train_network(
+void train_network(
     int epochs, 
     double* hidden_layer,
     double* output_layer, 
@@ -254,11 +254,12 @@ int train_network(
         }
     }
     */
+    /*
     printf("\nTraining is done!\n");
     char path[] = "bin/weights_biases.txt";
     save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
 	printf("Weights and biases saved.\n");
-    return 1;
+    */
 }
 
 /*

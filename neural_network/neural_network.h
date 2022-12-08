@@ -11,12 +11,12 @@
     - number of training sets
 */
 
-#define num_inputs 256
-#define num_hidden 256
-#define num_output 10
+int num_inputs = 256;
+int num_hidden = 256;
+int num_output = 10;
 const double learning_rate = 0.1f;
-#define res 16
-#define num_training_sets 10
+int res =  16;
+int num_training_sets = 10;
 
 /*
         Training data:
@@ -80,7 +80,7 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     Neural network functions:
 */
 
-int train_network(
+void train_network(
     int epochs, 
     double* hidden_layer,
     double* output_layer, 
