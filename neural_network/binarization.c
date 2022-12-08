@@ -56,7 +56,7 @@ double *convert_to_array(char path[]){
             }
         }
     }
-    free(image);
+    SDL_FreeSurface(image);
     return array;
 }
 
