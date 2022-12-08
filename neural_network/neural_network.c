@@ -263,6 +263,9 @@ int train_network(
     }
     */
     printf("\nTraining is done!\n");
+    char path[] = "bin/weights_biases.txt";
+    save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
+	printf("Weights and biases saved.\n");
     return 1;
 }
 
@@ -311,18 +314,9 @@ int main(){
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
 
-	printf("Done training and weights and biases set.\n");
-        printf("Do you want to save weights and biases? (y/n): \n");
-        scanf("%c", &answer);
-
-        if (answer == 'y'){
-            char path[] = "bin/weights_biases.txt";
-            save_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
-	        printf("Weights and biases saved.\n");
-        }
     }
 
-    char input[100] = "images/1.png";
+    char input[100];
 
     /*                  COMMENT OUT WHEN *NOT* TESTING
     -------------------------------------------------------------------------
