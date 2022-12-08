@@ -79,22 +79,22 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     fp = fopen(path, "r");
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
-            fscanf(fp, "%d, ", hidden_layer_weights[i][j]);
+            fscanf(fp, "%lf, ", *hidden_layer_weights[i][j]);
         }
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
         for (int j = 0; j < num_output; j++){
-            fscanf(fp, "%d, ", output_layer_weights[i][j]);
+            fscanf(fp, "%lf, ", *output_layer_weights[i][j]);
         }
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_hidden; i++){
-        fscanf(fp, "%d, ", hidden_layer_bias[i]);
+        fscanf(fp, "%lf, ", *hidden_layer_bias[i]);
     }
     fscanf(fp, "\n");
     for (int i = 0; i < num_output; i++){
-        fscanf(fp, "%d, ", output_layer_bias[i]);
+        fscanf(fp, "%lf, ", *output_layer_bias[i]);
     }
     fscanf(fp, "\n");
     fclose(fp);
