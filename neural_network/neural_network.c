@@ -286,11 +286,11 @@ int *main(){
     double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
     double* output_layer_bias = malloc(num_output * sizeof(double)); 
 
-    double* hidden_layer_weights[num_inputs];
+    double* hidden_layer_weights[num_inputs][num_hidden];
     for (int i = 0; i < num_inputs; i++){
         hidden_layer_weights[i] = malloc(num_hidden * sizeof(double));
     }
-    double* output_layer_weights[num_hidden];
+    double* output_layer_weights[num_hidden][num_output];
     for (int i = 0; i < num_hidden; i++){
         output_layer_weights[i] = malloc(num_output * sizeof(double));
     }
@@ -316,7 +316,7 @@ int *main(){
 
     }
 
-    int grid[81];
+    static int grid[81];
     /*
     for (int i = 0; i < 81; i++){
         // Find out the number in the image (input: image of cell, output: number)
