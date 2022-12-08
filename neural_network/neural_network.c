@@ -69,7 +69,6 @@ void save_weights_and_biases(char path[], double** hidden_layer_weights,
         fprintf(fp, "%lf, ", output_layer_bias[i]);
     }
     fclose(fp);
-    free(fp);
 }
 
 void load_weights_and_biases(char path[], double** hidden_layer_weights, 
@@ -104,7 +103,6 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     fscanf(fp, "\n");
     fclose(fp);
     free(p);
-    free(fp);
 }
 
 // Function that converts images into training data

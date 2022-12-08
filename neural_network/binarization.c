@@ -55,7 +55,7 @@ double *convert_to_array(char path[]){
             }
         }
     }
-    SDL_destroy(image);
+    free(image);
     return array;
 }
 
