@@ -61,13 +61,11 @@ double *convert_to_array(char path[]){
 }
 
 void main(){
-    SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Init(SDL_INIT_VIDEO);
+    
     SDL_Surface *image = IMG_Load("images/1.png");
     image = resize_image(image, res);
-    SDL_Window *window = SDL_CreateWindow("Image", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 100, 100, 0);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_SaveBMP(image, "images/test.bmp");
     double *array = convert_to_array("images/1.png");
     for (int i = 0; i < num_inputs; i++){
         if (i % res == 0)
