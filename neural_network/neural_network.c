@@ -188,6 +188,7 @@ int train_network(
 
     for (int i = 0; i < num_output; i++) {
         output_layer_bias[i] = init_weight_bias();
+        printf("hehehe");
     }
 
     printf("Training network...\n");
