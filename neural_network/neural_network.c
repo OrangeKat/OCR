@@ -131,7 +131,7 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 
 // Compute hidden layer
 void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
-    double* hidden_layer_weights, double training_input){
+    double* hidden_layer_weights, double training_input[num_inputs]){
     
     for (int j = 0; j < num_hidden; j++){
         double activation = *hidden_layer_bias[j];
@@ -163,7 +163,7 @@ int train_network(
     double* hidden_layer_bias,//[num_hidden], 
     double* output_layer_bias,//[num_output], 
     double* hidden_layer_weights,//[num_inputs][num_hidden], 
-    double* output_layer_weights,//[num_hidden][num_output]
+    double* output_layer_weights//[num_hidden][num_output]
     ){
     printf("Setting weights and biases...\n");
     // Deprecated doesnt work (TO FIX)
@@ -264,20 +264,28 @@ int train_network(
 
 int main(){
 
-    double* hidden_layer = calloc(num_hidden, sizeof(double));
-    double* output_layer = calloc(num_output, sizeof(double)); 
+    double* hidden_layer;
+    double tmp_hidden[num_hidden];
+    hidden_layer = &tmp_hidden;
+    double* output_layer = calloc(num_output, sizeof(double))
+    double tmp_output[num_output];
+    output_layer = &tmp_output;
 
-    double* hidden_layer_bias = calloc(num_hidden, sizeof(double)); 
-    double* output_layer_bias = calloc(num_output, sizeof(double)); 
+    double* hidden_layer_bias;
+    double tmp_hidden_bias[num_hidden];
+    hidden_layer_bias = &tmp_hidden_bias;
 
-    double* hidden_layer_weights = calloc(num_inputs, num_hidden * sizeof(double));
-    for (int i = 0; i < num_inputs; i++){
-        hidden_layer_weights[i] = calloc(num_hidden, sizeof(double));
-    }
-    double* output_layer_weights = calloc(num_hidden, num_output * sizeof(double));
-    for (int i = 0; i < num_hidden; i++){
-        output_layer_weights[i] = calloc(num_output, sizeof(double));
-    }
+    double* output_layer_bias;
+    double tmp_output_bias[num_output];
+    output_layer_bias = &tmp_output_bias; 
+
+    double* hidden_layer_weights;
+    double tmp_hidden_weights[num_inputs][num_hidden];
+    hidden_layer_weights = &tmp_hidden_weights;
+
+    double* output_layer_weights;
+    double tmp_output_weights[num_hidden][num_output];
+    output_layer_weights = &tmp_output_weights;
 
     // Ask to load weights and biases or init new ones
     char answer;
