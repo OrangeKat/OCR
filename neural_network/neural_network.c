@@ -47,8 +47,7 @@ void shuffle(int *array, size_t n){
 void save_weights_and_biases(char path[], double** hidden_layer_weights, 
     double** output_layer_weights, double* hidden_layer_bias, double* output_layer_bias){
     
-    FILE *fp;
-    fp = fopen(path, "w");
+    FILE *fp = fopen(path, "w");
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
             fprintf(fp, "%lf, ", hidden_layer_weights[i][j]);
@@ -74,8 +73,7 @@ void save_weights_and_biases(char path[], double** hidden_layer_weights,
 void load_weights_and_biases(char path[], double** hidden_layer_weights, 
     double** output_layer_weights, double* hidden_layer_bias, double* output_layer_bias){
     
-    FILE *fp;
-    fp = fopen(path, "r");
+    FILE *fp = fopen(path, "r");
     double *p = malloc(sizeof(double));
     for (int i = 0; i < num_inputs; i++){
         for (int j = 0; j < num_hidden; j++){
@@ -102,6 +100,7 @@ void load_weights_and_biases(char path[], double** hidden_layer_weights,
     }
     fscanf(fp, "\n");
     fclose(fp);
+    free(p);
 }
 
 // Function that converts images into training data
@@ -270,7 +269,7 @@ int train_network(
     - Compute Output lair 
 */
 
-int* main(){
+int main(){
 
     double* hidden_layer = malloc(num_hidden * sizeof(double));
     double* output_layer = malloc(num_output * sizeof(double)); 
@@ -290,11 +289,11 @@ int* main(){
 
     
     // Ask to load weights and biases or init new ones
-    char answer;
+    char *answer = malloc(sizeof(char));
     printf("Load weights and biases? (y/n): \n");
-    scanf("%c", &answer);
+    scanf("%c", answer);
     
-    if (answer == 'y'){
+    if (*answer == 'y'){
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
         load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
