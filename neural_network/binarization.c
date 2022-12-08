@@ -61,7 +61,7 @@ double *convert_to_array(char path[]){
 }
 
 void main(){
-    double *array = convert_to_array("images/0.png");
+    double *array = convert_to_array("images/1.png");
     for (int i = 0; i < num_inputs; i++){
         if (i % res == 0)
             printf("\n");
