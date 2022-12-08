@@ -42,7 +42,7 @@ double convert_to_array(char path[]){
     resize_image(image, res);
     int height = image->h;
     int width = image->w;
-    double *array = malloc(height * width * sizeof(int *));
+    static double array[height * width];
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             Uint32 pixel = getpixel(image,i,j);
@@ -55,6 +55,6 @@ double convert_to_array(char path[]){
             }
         }
     }
-    return *array;
+    return array;
 }
 
