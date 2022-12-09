@@ -249,6 +249,17 @@ void train_network(
                     hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
+
+            printf("Expected: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n", 
+            training_outputs[k][0], training_outputs[k][1], training_outputs[k][2], 
+            training_outputs[k][3], training_outputs[k][4], training_outputs[k][5], 
+            training_outputs[k][6], training_outputs[k][7], training_outputs[k][8], 
+            training_outputs[k][9]);
+            prinrf("Got: %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", 
+            output_layer[0], output_layer[1], output_layer[2], 
+            output_layer[3], output_layer[4], output_layer[5], 
+            output_layer[6], output_layer[7], output_layer[8], 
+            output_layer[9]);
         }
     }
     
