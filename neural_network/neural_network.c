@@ -165,7 +165,6 @@ double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_lay
         double activation = hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
             activation += training_input[p] * hidden_layer_weights[p][j] * 0.01;
-            
         }
         hidden_layer[j] = sigmoid(activation);
     }
