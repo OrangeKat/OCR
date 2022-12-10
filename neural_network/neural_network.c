@@ -193,9 +193,7 @@ void train_network(
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
 	
-	    if (i % 100 == 0){
-            printf("|");
-        }
+	    printf("Epoch %d\n", i);
 	    
         //Rearrange training sets in random order
         int training_set_order[num_training_sets];
