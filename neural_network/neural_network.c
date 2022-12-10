@@ -340,12 +340,20 @@ int main(int argc, char *argv[]) {
         }
         output_layer[j] = sigmoid(activation);
     }
-            
+    
+    printf("Output: ");
     for (int n = 0; n < num_output; n++){
         printf("%f, ", output_layer[n]);
     }
 
-    printf("\n");
+    int index = 0;
+    for (int i = 0; i < num_output; i++){
+        if (output_layer[i] > output_layer[index]){
+            index = i;
+        }
+    }
+
+    printf("\nResult: %d\n", index);
 
     return 1;
     
