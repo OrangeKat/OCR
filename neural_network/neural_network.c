@@ -193,7 +193,7 @@ void train_network(
     //Iterate through all training sets for a number of epochs
     for (int i = 0; i < epochs; i++){
 	
-	    if (i % (i / 100) == 0){
+	    if (i % 100 == 0){
             printf("|");
         }
 	    
