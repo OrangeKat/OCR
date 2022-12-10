@@ -52,11 +52,10 @@ void remove_border(double* array){
     }
 }
 
-
+/*
 void main(){
     double *array = convert_to_array("bin/training_set/1.png");
     remove_border(array);
-    
     for (int i = 0; i < num_inputs; i++){
         if (i % res == 0)
             printf("\n");
@@ -64,5 +63,5 @@ void main(){
     }
     printf("\n");
 }
-
+*/
 

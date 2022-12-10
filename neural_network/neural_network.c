@@ -209,6 +209,7 @@ void train_network(
 
             double input[num_inputs]; 
             memcpy(input, convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
+            remove_border(input);
 
             // Forward pass
             
