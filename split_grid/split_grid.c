@@ -2,20 +2,20 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-struct CoordinateQueue* create_queue()
+struct CoordinateQueue* create_queue(int capacity)
 {
     struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
     queue->size = 0;
-    queue->capacity = 10000;
+    queue->capacity = capacity;
     queue->front = 0;
     queue->back = -1;
-    queue->data = malloc(10000 * sizeof(struct Coordinate));
+    queue->data = malloc(capacity * sizeof(struct Coordinate));
     return queue;
 }
 
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue = create_queue();
+    struct CoordinateQueue* queue = create_queue(100000);
     struct Coordinate coord = {0, 0};
     enqueue(queue, coord);
     while (is_empty(queue) == 0){
