@@ -346,7 +346,7 @@ int main(int argc, char *argv[]) {
     DIR *dir = opendir(argv[1]);
     struct dirent *entry;
     FILE *out = fopen("grid.txt", "w");
-
+    int i = 1;
     while ((entry = readdir(dir)) != NULL) {
         char *filename = malloc(sizeof(char) * 100);
         sprintf(filename, "%s%s", argv[1], entry->d_name);
@@ -386,7 +386,8 @@ int main(int argc, char *argv[]) {
         else if (i % 3 == 0){
             fprintf(out, " ");
         }
-        
+
+        i++;
     }
     fclose(out);
     return 1;
