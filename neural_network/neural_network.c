@@ -35,6 +35,7 @@ double leaky_relu(double x){
 
 // Derivative of the activation function
 double sigmoid_derivative(double x){
+    x *= 0.01;
     return x*(1-x);
 }
 
