@@ -22,7 +22,7 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue;
+    struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
     *queue = create_queue();
     struct Coordinate coord = {0, 0};
     enqueue(queue, coord);
