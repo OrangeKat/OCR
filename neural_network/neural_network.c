@@ -266,7 +266,7 @@ void train_network(
             
             double deltaOutput[num_output];
             for (int j=0; j<num_output; j++) {
-                double errorOutput = (training_outputs[i][j]-output_layer[j]);
+                double errorOutput = (training_outputs[x][j]-output_layer[j]);
                 deltaOutput[j] = errorOutput*sigmoid_derivative(output_layer[j]);
             }
             
