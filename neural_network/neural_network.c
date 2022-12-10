@@ -17,7 +17,6 @@
 
 // Activation function
 double sigmoid(double x){
-    x *= 0.01;
     return 1/(1+exp(-x));
 }
 
@@ -35,7 +34,6 @@ double leaky_relu(double x){
 
 // Derivative of the activation function
 double sigmoid_derivative(double x){
-    x *= 0.01;
     return x*(1-x);
 }
 
@@ -166,7 +164,7 @@ double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_lay
     for (int j = 0; j < num_hidden; j++){
         double activation = hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * hidden_layer_weights[p][j];
+            activation += training_input[p] * hidden_layer_weights[p][j] * 0.01;
             
         }
         hidden_layer[j] = sigmoid(activation);
@@ -181,7 +179,7 @@ double *compute_output_layer(double output_layer[num_output], double* output_lay
     for (int j = 0; j < num_output; j++){
         double activation = output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
-            activation += hidden_layer[p] * output_layer_weights[p][j];
+            activation += hidden_layer[p] * output_layer_weights[p][j] * 0.01;
         }
         output_layer[j] = sigmoid(activation);
     }
