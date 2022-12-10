@@ -12,7 +12,7 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 // Function that removes the border lines from a cell
 void remove_border(int *array, int index, int width, int height, int *M){
     
-    if (array[index] == 0 && M[index] == -1){
+    if (array[index] == 0 && M[index] != -1){
         M[index] = -1;
         int x = index % width;
         int y = index / height;
