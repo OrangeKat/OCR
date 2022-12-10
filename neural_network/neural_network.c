@@ -347,8 +347,8 @@ int main(int argc, char *argv[]) {
     printf("Treating grid: %s...\n", argv[1]);
 
     FILE *out = fopen("grid.txt", "w");
-    int i = 1;
-    for (int i = 0; i < 81; i++) {
+
+    for (int i = 1; i =< 81; i++) {
         const char filename[25] = "%scell_%d.png", argv[1], i;
         printf("Treating %s...\n",filename);
         double input[num_inputs];
@@ -388,7 +388,6 @@ int main(int argc, char *argv[]) {
         if (i % 27 == 0) {
             fprintf(out, "\n");
         }
-        
     }
     fclose(out);
     return 1;
