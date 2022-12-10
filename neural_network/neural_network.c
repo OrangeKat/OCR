@@ -364,8 +364,8 @@ int *main(){
     return grid;
     */
     
-    double input_cell[num_inputs];
-    memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
+    double input_cell[num_inputs] = {0.0f, 0.0f};
+    //memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
     // Compute Hidden lair
     memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell), sizeof(double) * num_hidden);
     // Compute Output lair
