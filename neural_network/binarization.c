@@ -31,9 +31,9 @@ double *convert_to_array(char path[]){
             SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 1.0f;
-            } else {
                 array[i * height + j] = 0.0f;
+            } else {
+                array[i * height + j] = 1.0f;
             }
         }
     }

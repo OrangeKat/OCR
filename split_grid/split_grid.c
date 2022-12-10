@@ -2,6 +2,17 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+// Function that removes the border lines from a cell
+void remove_border(double* array, int width, int height){
+    for (int i = 0; i < height; i++){
+        for (int j = 0; j < width; j++){
+            if (i == 0 || i == height - 1 || j == 0 || j == width - 1){
+                array[i * height + j] = 0.0f;
+            }
+        }
+    }
+}
+
 // Function that converts a black and white image to a array of 0s and 1s
 int *convert_to_array(SDL_Surface *image){
     const int height = image->h;
@@ -15,9 +26,9 @@ int *convert_to_array(SDL_Surface *image){
             SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 1;
-            } else {
                 array[i * height + j] = 0;
+            } else {
+                array[i * height + j] = 1;
             }
         }
     }
@@ -58,6 +69,7 @@ void split_image(char *filename){
 
     int *array;
     memcpy(array, convert_to_array(image), sizeof(int)*81);
+    remove_border(array,width,height);
     image = create_surface_from_2d_array(array, width, height);
 
     for (int i = 0; i < 9; i++){
