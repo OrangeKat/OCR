@@ -2,16 +2,17 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-struct CoordinateQueue* create_queue(int capacity)
+struct CoordinateQueue create_queue()
 {
-    struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
-    queue->size = 0;
-    queue->capacity = capacity;
-    queue->front = 0;
-    queue->back = -1;
-    queue->data = malloc(capacity * sizeof(struct Coordinate));
+    struct CoordinateQueue queue;
+    queue.size = 0;
+    queue.capacity = 10;
+    queue.front = 0;
+    queue.back = -1;
+    queue.data = malloc(queue.capacity * sizeof(struct Coordinate));
     return queue;
 }
+
 
 SDL_Surface *resize_image(SDL_Surface *image, int n){
     SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
@@ -21,7 +22,8 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue = create_queue(1000);
+    struct CoordinateQueue* queue;
+    *queue = create_queue();
     struct Coordinate coord = {0, 0};
     enqueue(queue, coord);
     while (is_empty(queue) == 0){
