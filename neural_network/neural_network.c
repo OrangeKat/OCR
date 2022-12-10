@@ -204,22 +204,18 @@ void train_network(
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
             hidden_layer_weights[i][j] = init_weight_bias();
-            printf("%lf, ", hidden_layer_weights[i][j]);
         }
     }
     
     for (int i = 0; i < num_hidden; i++) {
         hidden_layer_bias[i] = init_weight_bias();
-        printf("%lf, ", hidden_layer_bias[i]);
         for (int j = 0; j < num_output; j++) {
             output_layer_weights[i][j] = init_weight_bias();
-            printf("%lf, ", output_layer_weights[i][j]);
         }
     }
 
     for (int i = 0; i < num_output; i++) {
         output_layer_bias[i] = init_weight_bias();
-        printf("%lf, ", output_layer_bias[i]);
     }
     
     printf("Training network...\n");
@@ -249,7 +245,7 @@ void train_network(
             for (int j=0; j<num_hidden; j++) {
                 double activation=hidden_layer_bias[j];
                  for (int k=0; k<num_inputs; k++) {
-                    activation+=input[k]*hidden_layer_weights[k][j];
+                    activation+=input[k]*hidden_layer_weights[k][j] * 0.01;
                 }
                 hidden_layer[j] = sigmoid(activation);
             }
@@ -257,7 +253,7 @@ void train_network(
             for (int j=0; j<num_output; j++) {
                 double activation=output_layer_bias[j];
                 for (int k=0; k<num_hidden; k++) {
-                    activation+=hidden_layer[k]*output_layer_weights[k][j];
+                    activation+=hidden_layer[k]*output_layer_weights[k][j] * 0.01;
                 }
                 output_layer[j] = sigmoid(activation);
             }
@@ -382,7 +378,7 @@ int *main(){
     for (int j=0; j<num_hidden; j++) {
         double activation=hidden_layer_bias[j];
          for (int k=0; k<num_inputs; k++) {
-            activation+=input[k]*hidden_layer_weights[k][j];
+            activation+=input[k]*hidden_layer_weights[k][j] * 0.01;
         }
         hidden_layer[j] = sigmoid(activation);
     }
@@ -390,7 +386,7 @@ int *main(){
     for (int j=0; j<num_output; j++) {
         double activation=output_layer_bias[j];
         for (int k=0; k<num_hidden; k++) {
-            activation+=hidden_layer[k]*output_layer_weights[k][j];
+            activation+=hidden_layer[k]*output_layer_weights[k][j] * 0.01;
         }
         output_layer[j] = sigmoid(activation);
     }
