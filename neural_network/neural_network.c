@@ -210,8 +210,7 @@ void train_network(
             int x = training_set_order[n];
 
             double input[num_inputs]; 
-            SDL_Surface *image = load_image(training_inputs[x]);
-            memcpy(input, convert_to_array(image), num_inputs * sizeof(double));
+            memcpy(input, convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
             remove_border(input);
 
             // Forward pass
@@ -346,10 +345,9 @@ int main(int argc, char *argv[]) {
     
     printf("Treating %s...\n",argv[1]);
     double input[num_inputs];
-    SDL_Surface *image = load_image(argv[1]);
-    memcpy(input, convert_to_array(image), sizeof(double) * num_inputs);
-    SDL_FreeSurface(image);
+    memcpy(input, convert_to_array(argv[1]), sizeof(double) * num_inputs);
     remove_border(input);
+
     // Forward pass
     for (int j=0; j<num_hidden; j++) {
         double activation=hidden_layer_bias[j];
