@@ -379,12 +379,17 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        printf("Result %d: %c", i, index == 0 ? '.' : ((char)index));
+
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
             fprintf(out, "\n");
 	    } 
         else if (i % 3 == 0){
             fprintf(out, " ");
+        }
+        if (i % 27 == 0) {
+            fprintf(out, "\n");
         }
 
         i++;
