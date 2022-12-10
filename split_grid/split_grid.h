@@ -52,17 +52,6 @@ int is_empty(struct CoordinateQueue* queue)
     return 0;
 }
 
-struct CoordinateQueue* create_queue(int capacity)
-{
-    struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
-    queue->size = 0;
-    queue->capacity = capacity;
-    queue->front = 0;
-    queue->back = -1;
-    queue->data = malloc(capacity * sizeof(struct Coordinate));
-    return queue;
-}
-
 void split_image(char *filename);
 
 #endif
