@@ -317,9 +317,10 @@ int main(int argc, char *argv[]) {
             hidden_layer_weights, output_layer_weights);
     }
     
-    printf("Treating cell...\n");
+    printf("Treating image: %s...\n", argv[0]);
     
     double input[num_inputs];
+    
     memcpy(input, convert_to_array(argv[0]), sizeof(double) * num_inputs);
 
     // Forward pass
@@ -343,6 +344,7 @@ int main(int argc, char *argv[]) {
     for (int n = 0; n < num_output; n++){
         printf("%f, ", output_layer[n]);
     }
+
     printf("\n");
 
     return 1;
