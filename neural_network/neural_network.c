@@ -380,7 +380,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        printf("Result %d: %c\n", i, index == 0 ? '.' : ((char)index));
+        printf("Result %d: %d\n", i, index);
 
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
