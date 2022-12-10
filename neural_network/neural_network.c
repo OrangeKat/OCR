@@ -241,7 +241,7 @@ void train_network(
         for(int n = 0; n < num_training_sets; n++){
             int x = training_set_order[n];
 
-            input[num_inputs]; 
+            double input[num_inputs]; 
             memcpy(input, convert_to_array(input), num_inputs * sizeof(double));
 
             // Forward pass
