@@ -167,7 +167,7 @@ double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_lay
             activation += training_input[p] * hidden_layer_weights[p][j];
             
         }
-        hidden_layer[j] = leaky_relu(activation);
+        hidden_layer[j] = sigmoid(activation);
     }
     return hidden_layer;
 }
@@ -181,7 +181,7 @@ double *compute_output_layer(double output_layer[num_output], double* output_lay
         for (int p = 0; p < num_hidden; p++){
             activation += hidden_layer[p] * output_layer_weights[p][j];
         }
-        output_layer[j] = leaky_relu(activation);
+        output_layer[j] = sigmoid(activation);
         printf("%f ", activation);
     }
     printf("\n");
@@ -253,7 +253,7 @@ void train_network(
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
                 double error = training_outputs[n][j] - output_layer[j];
-                delta_output[j] = error * leaky_relu_derivative(output_layer[j]);
+                delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
 
             //Compute change in hidden weights
@@ -263,7 +263,7 @@ void train_network(
                 for (int p = 0; p < num_output; p++){
                     error += delta_output[p] * output_layer_weights[j][p];
                 }
-                delta_hidden[j] = error * leaky_relu_derivative(hidden_layer[j]);
+                delta_hidden[j] = error * sigmoid_derivative(hidden_layer[j]);
             }
 
             //Update output weights
