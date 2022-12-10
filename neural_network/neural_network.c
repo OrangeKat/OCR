@@ -204,18 +204,22 @@ void train_network(
     for (int i = 0; i < num_inputs; i++) {
         for (int j = 0; j < num_hidden; j++) {
             hidden_layer_weights[i][j] = init_weight_bias();
+            printf("%lf, ", hidden_layer_weights[i][j]);
         }
     }
     
     for (int i = 0; i < num_hidden; i++) {
         hidden_layer_bias[i] = init_weight_bias();
+        printf("%lf, ", hidden_layer_bias[i]);
         for (int j = 0; j < num_output; j++) {
             output_layer_weights[i][j] = init_weight_bias();
+            printf("%lf, ", output_layer_weights[i][j]);
         }
     }
 
     for (int i = 0; i < num_output; i++) {
         output_layer_bias[i] = init_weight_bias();
+        printf("%lf, ", output_layer_bias[i]);
     }
     
     printf("Training network...\n");
