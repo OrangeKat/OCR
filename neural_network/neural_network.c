@@ -242,7 +242,7 @@ void train_network(
             int x = training_set_order[n];
 
             double input[num_inputs]; 
-            memcpy(input, convert_to_array(input), num_inputs * sizeof(double));
+            memcpy(input, convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
 
             // Forward pass
             
@@ -251,7 +251,7 @@ void train_network(
                  for (int k=0; k<num_inputs; k++) {
                     activation+=input[k]*hidden_layer_weights[k][j];
                 }
-                hiddenLayer[j] = sigmoid(activation);
+                hidden_layer[j] = sigmoid(activation);
             }
             
             for (int j=0; j<num_output; j++) {
@@ -383,7 +383,7 @@ int *main(){
          for (int k=0; k<num_inputs; k++) {
             activation+=input[k]*hidden_layer_weights[k][j];
         }
-        hiddenLayer[j] = sigmoid(activation);
+        hidden_layer[j] = sigmoid(activation);
     }
         
     for (int j=0; j<num_output; j++) {
