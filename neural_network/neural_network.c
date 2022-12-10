@@ -348,7 +348,7 @@ int main(int argc, char *argv[]) {
     FILE *out = fopen("grid.txt", "w");
     int i = 1;
     while ((entry = readdir(dir)) != NULL) {
-        printf("Treating %s...\n", entry->d_name);
+        printf("Treating %s%s...\n",argv[1] , entry->d_name);
         char *filename = malloc(sizeof(char) * 100);
         sprintf(filename, "%s%s", argv[1], entry->d_name);
         double input[num_inputs];
