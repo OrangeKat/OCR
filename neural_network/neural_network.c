@@ -319,15 +319,14 @@ int main(int argc, char *argv[]) {
     }
     */
 
-    DIR *d = opendir("bin");
-    struct dirent *entry;
     int found = 0;
-    while ((entry = readdir(d)) != NULL){
-        if (entry->d_name == "weights_biases.txt"){
-            found = 1;
-            break;
-        }
+    FILE *fp;
+    fp = fopen("bin/weights_biases.txt", "r");
+    if (fp != NULL) {
+        found = 1;
+        fclose(fp);
     }
+    
     if (found == 1) {
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
