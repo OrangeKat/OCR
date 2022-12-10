@@ -15,8 +15,8 @@ void remove_border(int* array, int width, int height){
 
 // Function that converts a black and white image to a array of 0s and 1s
 int *convert_to_array(SDL_Surface *image){
-    const int height = image->h;
-    const int width = image->w;
+    int height = image->h;
+    int width = image->w;
     Uint32* pixels = image->pixels;
     int *array = malloc(height * width * sizeof(int));
     for (int i = 0; i < height; i++){
