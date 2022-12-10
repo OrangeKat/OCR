@@ -38,6 +38,7 @@ void remove_border_lines(SDL_Surface *surface) {
                 SDL_MapRGB(surface->format, 255, 255, 255);
             }
         }
+        found_black = k;
         start++;
         height--;
         width--;
