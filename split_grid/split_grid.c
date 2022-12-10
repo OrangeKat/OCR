@@ -3,11 +3,11 @@
 #include <SDL2/SDL_image.h>
 
 // Function that removes the border lines from a cell
-void remove_border(double* array, int width, int height){
+void remove_border(int* array, int width, int height){
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             if (i == 0 || i == height - 1 || j == 0 || j == width - 1){
-                array[i * height + j] = 0.0f;
+                array[i * height + j] = 0;
             }
         }
     }
