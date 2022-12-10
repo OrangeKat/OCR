@@ -14,7 +14,7 @@ void remove_border_lines(SDL_Surface *surface) {
             Uint32 *pixel = (Uint32*)surface->pixels + j * surface->w + i;
             Uint8 r, g, b;
             SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
-                if (r != 0 || g != 0 || b != 0) {
+                if ((r + g + b) / 3 > 128) {
                     if (top == -1) {
                         top = j;
                 }
@@ -31,7 +31,7 @@ void remove_border_lines(SDL_Surface *surface) {
             Uint32 *pixel = (Uint32*)surface->pixels + i * surface->w + j;
             Uint8 r, g, b;
             SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
-            if (r != 0 || g != 0 || b != 0) {
+            if ((r + g + b) / 3 > 128) {
                 if (left == -1) {
                     left = j;
                 }
