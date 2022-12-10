@@ -158,7 +158,7 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 */ 
 
 // Compute hidden layer
-double *compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
+double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_layer_bias, 
     double** hidden_layer_weights, double training_input[num_inputs]){
     
     for (int j = 0; j < num_hidden; j++){
@@ -173,7 +173,7 @@ double *compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias,
 }
 
 // Compute output layer
-double *compute_output_layer(double* output_layer, double* output_layer_bias, 
+double *compute_output_layer(double output_layer[num_output], double* output_layer_bias, 
     double** output_layer_weights, double* hidden_layer){
 
     for (int j = 0; j < num_output; j++){
@@ -191,8 +191,8 @@ double *compute_output_layer(double* output_layer, double* output_layer_bias,
 // Train neural network
 void train_network(
     int epochs, 
-    double* hidden_layer,
-    double* output_layer, 
+    double hidden_layer[num_hidden],
+    double output_layer[num_output], 
     double* hidden_layer_bias, 
     double* output_layer_bias, 
     double** hidden_layer_weights, 
@@ -314,8 +314,8 @@ void train_network(
 
 int *main(){
 
-    double* hidden_layer = malloc(num_hidden * sizeof(double));
-    double* output_layer = malloc(num_output * sizeof(double)); 
+    double hidden_layer[num_hidden]; //= malloc(num_hidden * sizeof(double));
+    double output_layer[num_output]; //= malloc(num_output * sizeof(double)); 
 
     double* hidden_layer_bias = malloc(num_hidden * sizeof(double)); 
     double* output_layer_bias = malloc(num_output * sizeof(double)); 
@@ -378,9 +378,9 @@ int *main(){
     double input_cell[num_inputs];
     memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
     // Compute Hidden lair
-    compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
+    hidden_layer = compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
     // Compute Output lair
-    compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+    output_layer = compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
     // Find the index of the highest value in the output layer
     
     for (int n = 0; n < num_output; n++){
