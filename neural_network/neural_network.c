@@ -239,47 +239,57 @@ void train_network(
 
         //Iterate through all training sets
         for(int n = 0; n < num_training_sets; n++){
-            int k = training_set_order[n];
+            int x = training_set_order[n];
 
-            double input[num_inputs];
-	        memcpy(input, training_inputs[k], sizeof(double) * num_inputs); //convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
+            input[num_inputs]; 
+            memcpy(input, convert_to_array(input), num_inputs * sizeof(double));
 
-            // Compute Hidden lair
-            memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input), sizeof(double) * num_hidden);
-
-            // Compute Output lair
-            memcpy(output_layer, compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer), sizeof(double) * num_output);
-
-            //Compute change in output layer
-            double delta_output[num_output];
-            for (int j = 0; j < num_output; j++){
-                double error = training_outputs[n][j] - output_layer[j];
-                delta_output[j] = error * sigmoid_derivative(output_layer[j]);
-            }
-
-            //Compute change in hidden weights
-            double delta_hidden[num_hidden];
-            for (int j = 0; j < num_hidden; j++){
-                double error = 0.0f;
-                for (int p = 0; p < num_output; p++){
-                    error += delta_output[p] * output_layer_weights[j][p];
+            // Forward pass
+            
+            for (int j=0; j<num_hidden; j++) {
+                double activation=hidden_layer_bias[j];
+                 for (int k=0; k<num_inputs; k++) {
+                    activation+=input[k]*hidden_layer_weights[k][j];
                 }
-                delta_hidden[j] = error * sigmoid_derivative(hidden_layer[j]);
+                hiddenLayer[j] = sigmoid(activation);
             }
-
-            //Update output weights
-            for (int j = 0; j < num_output; j++){
-                output_layer_bias[j] += delta_output[j] * learning_rate;
-                for (int p = 0; p < num_hidden; p++){
-                    output_layer_weights[p][j] += hidden_layer[p] * delta_output[j] * learning_rate;
+            
+            for (int j=0; j<num_output; j++) {
+                double activation=output_layer_bias[j];
+                for (int k=0; k<num_hidden; k++) {
+                    activation+=hidden_layer[k]*output_layer_weights[k][j];
+                }
+                output_layer[j] = sigmoid(activation);
+            }
+                    
+           // Backprop
+            
+            double deltaOutput[num_output];
+            for (int j=0; j<num_output; j++) {
+                double errorOutput = (training_outputs[i][j]-output_layer[j]);
+                deltaOutput[j] = errorOutput*sigmoid_derivative(output_layer[j]);
+            }
+            
+            double deltaHidden[num_hidden];
+            for (int j=0; j<num_hidden; j++) {
+                double errorHidden = 0.0f;
+                for(int k=0; k<num_output; k++) {
+                    errorHidden+=deltaOutput[k]*output_layer_weights[j][k];
+                }
+                deltaHidden[j] = errorHidden*dSigmoid(hidden_layer[j]);
+            }
+            
+            for (int j=0; j<num_output; j++) {
+                output_layer_bias[j] += deltaOutput[j]*lr;
+                for (int k=0; k<num_hidden; k++) {
+                    output_layer_weights[k][j]+=hidden_layer[k]*deltaOutput[j]*lr;
                 }
             }
-
-            //Update hidden weights
-            for (int j = 0; j < num_hidden; j++){
-                hidden_layer_bias[j] += delta_hidden[j] * learning_rate;
-                for (int p = 0; p < num_inputs; p++){
-                    hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
+            
+            for (int j=0; j<num_hidden; j++) {
+                hidden_layer_bias[j] += deltaHidden[j]*lr;
+                for(int k=0; k<num_inputs; k++) {
+                    hidden_layer_weights[k][j]+=input[k]*deltaHidden[j]*lr;
                 }
             }
         }
@@ -364,14 +374,26 @@ int *main(){
     return grid;
     */
     
-    double input_cell[num_inputs] = {0.0f, 0.0f};
-    //memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
-    // Compute Hidden lair
-    memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell), sizeof(double) * num_hidden);
-    // Compute Output lair
-    memcpy(output_layer, compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer), sizeof(double) * num_output);
-    // Find the index of the highest value in the output layer
-    
+    double input[num_inputs] = {0.0f, 0.0f};
+
+    // Forward pass
+            
+    for (int j=0; j<num_hidden; j++) {
+        double activation=hidden_layer_bias[j];
+         for (int k=0; k<num_inputs; k++) {
+            activation+=input[k]*hidden_layer_weights[k][j];
+        }
+        hiddenLayer[j] = sigmoid(activation);
+    }
+        
+    for (int j=0; j<num_output; j++) {
+        double activation=output_layer_bias[j];
+        for (int k=0; k<num_hidden; k++) {
+            activation+=hidden_layer[k]*output_layer_weights[k][j];
+        }
+        output_layer[j] = sigmoid(activation);
+    }
+            
     for (int n = 0; n < num_output; n++){
         printf("%f, ", output_layer[n]);
     }
