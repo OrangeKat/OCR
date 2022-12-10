@@ -41,17 +41,22 @@ double *convert_to_array(char path[]){
     return array;
 }
 
-/*
+// Function that removes the border lines from a cell
+void remove_border(double* array){
+    for (int i = 0; i < res; i++){
+        for (int j = 0; j < res; j++){
+            if (i == 0 || i == res - 1 || j == 0 || j == res - 1){
+                array[i * res + j] = 0.0f;
+            }
+        }
+    }
+}
+
+
 void main(){
     double *array = convert_to_array("bin/training_set/1.png");
-    SDL_Surface *image = IMG_Load("bin/training_set/1.png");
-    image = resize_image(image, res);
-    SDL_SaveBMP(image, "bin/1.bmp");
-    image = IMG_Load("bin/training_set/1.png");
-    for (int i = 64; i > res; i-=8){
-        image = resize_image(image, i);
-    }
-    SDL_SaveBMP(image, "bin/2.bmp");
+    remove_border(array);
+    
     for (int i = 0; i < num_inputs; i++){
         if (i % res == 0)
             printf("\n");
@@ -59,5 +64,5 @@ void main(){
     }
     printf("\n");
 }
-*/
+
 
