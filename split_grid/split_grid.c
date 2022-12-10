@@ -2,15 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-SDL_Surface *resize_image(SDL_Surface *image, int n){
-    SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
-    SDL_BlitScaled(image,NULL,resized_image,NULL);
-    return resized_image;
-}
-
 // Function that removes the border lines from a cell
 void remove_border(int* array, int index, int width, int height){
-    if (array[index] == 1){
+    if (array[index] == 0){
         int x = index % width;
         int y = index / width;
         if (!(x == 0)){
@@ -25,7 +19,7 @@ void remove_border(int* array, int index, int width, int height){
         if (!(y == height - 1)){
             remove_border(array, (y + 1) * height + x, width, height);
         }
-        array[index] = 0;
+        array[index] = 1;
     }
 }
     
@@ -77,7 +71,6 @@ void split_image(char *filename){
     int x = 0,y = 0;
     int n = 1;
 
-    resize_image(image, 450);
     int *array = malloc(sizeof(int) * height * width);
     memcpy(array, convert_to_array(image), sizeof(int) * height * width);
     remove_border(array, 0, width, height);
