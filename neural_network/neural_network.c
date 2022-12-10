@@ -349,7 +349,7 @@ int main(int argc, char *argv[]) {
     FILE *out = fopen("grid.txt", "w");
     int i = 1;
     for (int i = 0; i < 81; i++) {
-        const char filname[25] = "%scell_%d.png", argv[1], i;
+        const char filename[25] = "%scell_%d.png", argv[1], i;
         printf("Treating %s...\n",filename);
         double input[num_inputs];
         SDL_Surface *image = load_image(filename);
