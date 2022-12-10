@@ -2,6 +2,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+// Function that resizes an image to an nxn image
+SDL_Surface *resize_image(SDL_Surface *image, int n){
+    SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
+    SDL_BlitScaled(image,NULL,resized_image,NULL);
+    return resized_image;
+}
+
 // Function that removes the border lines from a cell
 void remove_border(int* array, int index, int width, int height){
     if (array[index] == 0){
@@ -57,6 +64,7 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height){
 //function that splits a png of a sudoku grid into 81 images of the individual cells
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
+    image = resize_image(image, 450);
     int height = image->h;
     int width = image->w;
     int cell_height = height/9;
