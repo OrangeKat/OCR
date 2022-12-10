@@ -11,11 +11,11 @@
     - number of training sets
 */
 
-#define num_inputs 64
-#define num_hidden 64
+#define num_inputs 4
+#define num_hidden 4
 #define num_output 10
 double learning_rate = 0.01f;
-#define res 8
+#define res 2
 #define num_training_sets 10
 
 /*
