@@ -277,9 +277,9 @@ void train_network(
     - Compute Output lair 
 */
 
-int main(char argv[], int argc) {
+int main(char *argv[], int argc) {
     if (argc != 2) {
-        printf("Usage: <path to image>\n", argv[0]);
+        printf("Usage: Input cell image\n");
         return 1;
     }
     double hidden_layer[num_hidden]; //= malloc(num_hidden * sizeof(double));
