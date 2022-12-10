@@ -152,11 +152,8 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
         double activation = output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
             activation += hidden_layer[p] * output_layer_weights[p][j];
-            printf("%f\n", activation);
         }
         output_layer[j] = sigmoid(activation);
-        printf("%f\n", output_layer[j]);
-        printf("%f\n", sigmoid(activation));
     }
 }
 
@@ -231,7 +228,7 @@ void train_network(
             //Compute change in output layer
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
-                double error = input[j] - output_layer[j];
+                double error = training_outputs[j] - output_layer[j];
                 delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
 
@@ -247,7 +244,7 @@ void train_network(
 
             //Update output weights
             for (int j = 0; j < num_output; j++){
-                output_layer_bias[j] += delta_output[j];
+                output_layer_bias[j] += delta_output[j] * learning_rate;
                 for (int p = 0; p < num_hidden; p++){
                     output_layer_weights[p][j] += hidden_layer[p] * delta_output[j] * learning_rate;
                 }
@@ -255,7 +252,7 @@ void train_network(
 
             //Update hidden weights
             for (int j = 0; j < num_hidden; j++){
-                hidden_layer_bias[j] += delta_hidden[j];
+                hidden_layer_bias[j] += delta_hidden[j] * learning_rate;
                 for (int p = 0; p < num_inputs; p++){
                     hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
