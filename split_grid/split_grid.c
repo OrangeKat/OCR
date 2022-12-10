@@ -13,9 +13,15 @@ struct CoordinateQueue* create_queue(int capacity)
     return queue;
 }
 
+SDL_Surface *resize_image(SDL_Surface *image, int n){
+    SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
+    SDL_BlitScaled(image,NULL,resized_image,NULL);
+    return resized_image;
+}
+
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue = create_queue(100000);
+    struct CoordinateQueue* queue = create_queue(1000);
     struct Coordinate coord = {0, 0};
     enqueue(queue, coord);
     while (is_empty(queue) == 0){
@@ -83,6 +89,7 @@ void split_image(char *filename){
     int x = 0,y = 0;
     int n = 1;
 
+    resize_image(image, 450);
     int *array = malloc(sizeof(int) * height * width);
     memcpy(array, convert_to_array(image), sizeof(int) * height * width);
     remove_border(array,width,height);
