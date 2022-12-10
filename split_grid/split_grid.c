@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 
-void remove_border_lines(SDL_Surface *surface) {
+SDL_Surface *remove_border_lines(SDL_Surface *surface) {
 	int top = -1;
     int bottom = -1;
     int n = surface->h;
@@ -35,7 +35,7 @@ void remove_border_lines(SDL_Surface *surface) {
     rect.h = bottom - top;
     SDL_Surface *new_surface = SDL_CreateRGBSurface(0,rect.w,rect.h,32,0,0,0,0);
     SDL_BlitSurface(surface,&rect,new_surface,NULL);
-    SDL_BlitSurface(new_surface,NULL,surface,NULL);
+    return new_surface;
 }
 
 
@@ -77,7 +77,7 @@ void split_cells(SDL_Surface *surface, int *n){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(surface,&rect,cell,NULL);
-            remove_border_lines(cell);
+            surface = remove_border_lines(cell);
             char *cell_name = malloc(28);
             sprintf(cell_name, "output/cell_%d.png", *n);
             IMG_SavePNG(cell,cell_name);
@@ -103,7 +103,7 @@ void split_squares(SDL_Surface *surface){
             SDL_Rect rect = {x,y,square_width,square_height};
             SDL_Surface *square = SDL_CreateRGBSurface(0,square_width,square_height,32,0,0,0,0);
             SDL_BlitSurface(surface,&rect,square,NULL);
-            remove_border_lines(square);
+            square = remove_border_lines(square);
             split_cells(square, n);
             x += square_width;
         }
