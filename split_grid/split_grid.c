@@ -67,7 +67,7 @@ void split_image(char *filename){
     int x = 0,y = 0;
     int n = 1;
 
-    int *array;
+    int *array = malloc(sizeof(int)*81);
     memcpy(array, convert_to_array(image), sizeof(int)*81);
     remove_border(array,width,height);
     image = create_surface_from_2d_array(array, width, height);
