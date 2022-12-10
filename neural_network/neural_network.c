@@ -343,11 +343,13 @@ int main(int argc, char *argv[]) {
     
     printf("Treating grid: %s...\n", argv[1]);
 
+    DIR *dir = opendir(argv[1]);
+    struct dirent *entry;
     FILE *out = fopen("grid.txt", "w");
 
-    for (int i = 1; i <= 81; i++) {
+    while ((entry = readdir(dir)) != NULL) {
         char *filename = malloc(sizeof(char) * 100);
-        sprintf(filename, "%scell_%d.png", argv[1], i);
+        sprintf(filename, "%s%s", argv[1], entry->d_name);
         double input[num_inputs];
         memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
         remove_border(input);
@@ -380,8 +382,8 @@ int main(int argc, char *argv[]) {
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
             fprintf(out, "\n");
-	}
-        if (i % 3 == 0){
+	    } 
+        else if (i % 3 == 0){
             fprintf(out, " ");
         }
         
