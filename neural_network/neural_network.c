@@ -356,7 +356,7 @@ int main(int argc, char *argv[]) {
             sprintf(filename, "%s%s", argv[1], entry->d_name);
             printf("Treating %s...\n",filename);
             double input[num_inputs];
-            SDL_Surface *image = load_image(filename.c_str());
+            SDL_Surface *image = load_image(filename);
             memcpy(input, convert_to_array(image), sizeof(double) * num_inputs);
             SDL_FreeSurface(image);
             remove_border(input);
