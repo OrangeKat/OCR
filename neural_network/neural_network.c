@@ -345,7 +345,6 @@ int main(int argc, char *argv[]) {
     printf("Treating %s...\n",argv[1]);
     double input[num_inputs];
     memcpy(input, convert_to_array(argv[1]), sizeof(double) * num_inputs);
-    remove_border(input);
 
     // Forward pass
     for (int j=0; j<num_hidden; j++) {
