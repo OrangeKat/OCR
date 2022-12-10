@@ -11,17 +11,17 @@
     - number of training sets
 */
 
-#define num_inputs 256
-#define num_hidden 256
+#define num_inputs 2
+#define num_hidden 2
 #define num_output 1
-double learning_rate = 1.0f;
+double learning_rate = 0.1f;
 #define res 16
-#define num_training_sets 10
+#define num_training_sets 4
 
 /*
         Training data:
 --------------------------------
-*/
+
 char training_inputs[num_training_sets][25] = {
     "bin/training_set/0.png",
     "bin/training_set/1.png",
@@ -34,26 +34,39 @@ char training_inputs[num_training_sets][25] = {
     "bin/training_set/8.png",
     "bin/training_set/9.png"
 };
-/*
+
         (Training input)
 --------------------------------
-*/
+
 double training_outputs[num_training_sets][num_output] = {
-    {0.0f},
-    {1.0f},
-    {2.0f},
-    {3.0f},
-    {4.0f},
-    {5.0f},
-    {6.0f},
-    {7.0f},
-    {8.0f},
-    {9.0f}
+    {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
 };
-/*
+
         (Training output)
 --------------------------------
 */
+
+double training_inputs[num_training_sets][num_inputs] = {
+    {0.0f, 0.0f},
+    {0.0f, 1.0f},
+    {1.0f, 0.0f},
+    {1.0f, 1.0f}
+};
+double training_outputs[num_training_sets][num_output] = {
+    {0.0f},
+    {1.0f},
+    {1.0f},
+    {0.0f}
+};
 
 /*
     Helper functions:

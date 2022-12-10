@@ -238,7 +238,7 @@ void train_network(
             int k = training_set_order[n];
 
             double input[num_inputs];
-	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
+	        memcpy(input, training_inputs[k]); //convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
 
             // Compute Hidden lair
             memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input), sizeof(double) * num_hidden);
