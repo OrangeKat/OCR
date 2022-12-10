@@ -242,7 +242,7 @@ void train_network(
             int x = training_set_order[n];
 
             double input[num_inputs]; 
-            memcpy(input, training_inputs[x], sizeof(double) * num_inputs);//convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
+            memcpy(input, convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
 
             // Forward pass
             
@@ -342,7 +342,7 @@ int *main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        int epochs = 10000;
+        int epochs = 1000;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
@@ -374,7 +374,8 @@ int *main(){
     return grid;
     */
     
-    double input[num_inputs] = {0.0f, 0.0f};
+    double input[num_inputs];
+    memcpy(input, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
 
     // Forward pass
             
