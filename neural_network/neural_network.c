@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
     while ((entry = readdir(dir)) != NULL) {
         if (entry->d_type == DT_REG) {
             char *filename = malloc(sizeof(char) * 100);
-            sprintf(filename, "%s%s", argv[1], entry->d_name);
+            sprintf(filename, "%s/%s", argv[1], entry->d_name);
             printf("Treating %s...\n",filename);
             double input[num_inputs];
             memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
