@@ -242,7 +242,7 @@ void train_network(
             int x = training_set_order[n];
 
             double input[num_inputs]; 
-            memcpy(input, training_inputs[x], sizeof(double) * num_inputs)//convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
+            memcpy(input, training_inputs[x], sizeof(double) * num_inputs);//convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
 
             // Forward pass
             
