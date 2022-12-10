@@ -15,7 +15,7 @@
     - Function that converts images into training data
 */
 
-// Sigmoids
+// Activation function
 double sigmoid(double x){
     return 1/(1+exp(-x));
 }
@@ -24,13 +24,29 @@ double tanh(double x){
     return (exp(x)-exp(-x))/(exp(x)+exp(-x));
 }
 
-// Sigmoid derivative
+double leaky_relu(double x){
+    if(x>0){
+        return x;
+    }else{
+        return 0.01*x;
+    }
+}
+
+// Derivative of the activation function
 double sigmoid_derivative(double x){
     return x*(1-x);
 }
 
 double tanh_derivative(double x){
     return 1-x*x;
+}
+
+double leaky_relu_derivative(double x){
+    if(x>0){
+        return 1;
+    }else{
+        return 0.01;
+    }
 }
 
 // Init all weights and biases
@@ -151,7 +167,7 @@ double *compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias,
             activation += training_input[p] * hidden_layer_weights[p][j];
             
         }
-        hidden_layer[j] = tanh(activation);
+        hidden_layer[j] = leaky_relu(activation);
     }
     return hidden_layer;
 }
@@ -165,7 +181,7 @@ double *compute_output_layer(double* output_layer, double* output_layer_bias,
         for (int p = 0; p < num_hidden; p++){
             activation += hidden_layer[p] * output_layer_weights[p][j];
         }
-        output_layer[j] = tanh(activation);
+        output_layer[j] = leaky_relu(activation);
         printf("%f ", activation);
     }
     printf("\n");
@@ -237,7 +253,7 @@ void train_network(
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
                 double error = training_outputs[n][j] - output_layer[j];
-                delta_output[j] = error * tanh_derivative(output_layer[j]);
+                delta_output[j] = error * leaky_relu_derivative(output_layer[j]);
             }
 
             //Compute change in hidden weights
@@ -247,7 +263,7 @@ void train_network(
                 for (int p = 0; p < num_output; p++){
                     error += delta_output[p] * output_layer_weights[j][p];
                 }
-                delta_hidden[j] = error * tanh_derivative(hidden_layer[j]);
+                delta_hidden[j] = error * leaky_relu_derivative(hidden_layer[j]);
             }
 
             //Update output weights
