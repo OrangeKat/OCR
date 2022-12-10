@@ -134,7 +134,7 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 */ 
 
 // Compute hidden layer
-void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
+double *compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias, 
     double** hidden_layer_weights, double training_input[num_inputs]){
     
     for (int j = 0; j < num_hidden; j++){
@@ -145,10 +145,11 @@ void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias,
         }
         hidden_layer[j] = sigmoid(activation);
     }
+    return hidden_layer;
 }
 
 // Compute output layer
-void compute_output_layer(double* output_layer, double* output_layer_bias, 
+double *compute_output_layer(double* output_layer, double* output_layer_bias, 
     double** output_layer_weights, double* hidden_layer){
 
     for (int j = 0; j < num_output; j++){
@@ -158,6 +159,7 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
         }
         output_layer[j] = sigmoid(activation);
     }
+    return output_layer;
 }
 
 // Train neural network
@@ -216,10 +218,10 @@ void train_network(
 	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
 
             //Compute hidden layer
-            compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
+            hidden_layer = compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
 
             //Compute output layer
-            compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+            output_layer = compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
 
             //Compute change in output layer
             double delta_output[num_output];
