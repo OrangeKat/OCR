@@ -72,12 +72,12 @@ void split_cells(SDL_Surface *surface, int *n){
     int cell_height = height/9;
     int cell_width = width/9;
     int x = 0,y = 0;
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(surface,&rect,cell,NULL);
-            //remove_border_lines(cell);
+            remove_border_lines(cell);
             char *cell_name = malloc(28);
             sprintf(cell_name, "output/cell_%d.png", *n);
             IMG_SavePNG(cell,cell_name);
@@ -103,7 +103,7 @@ void split_squares(SDL_Surface *surface){
             SDL_Rect rect = {x,y,square_width,square_height};
             SDL_Surface *square = SDL_CreateRGBSurface(0,square_width,square_height,32,0,0,0,0);
             SDL_BlitSurface(surface,&rect,square,NULL);
-            //remove_border_lines(square);
+            remove_border_lines(square);
             split_cells(square, n);
             x += square_width;
         }
