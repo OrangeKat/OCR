@@ -4,10 +4,10 @@
 
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue = create_queue();
+    struct CoordinateQueue* queue = create_queue(1000);
     struct Coordinate coord = {0, 0};
     enqueue(queue, coord);
-    while (!is_empty(queue)){
+    while (is_empty(queue) == 0){
         struct Coordinate coord = dequeue(queue);
         int row = coord.row;
         int col = coord.col;

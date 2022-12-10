@@ -43,16 +43,20 @@ struct Coordinate dequeue(struct CoordinateQueue* queue)
     return coord;
 }
 
-bool is_empty(struct CoordinateQueue* queue)
+int is_empty(struct CoordinateQueue* queue)
 {
-    return queue->size == 0;
+    if (queue->size == 0)
+    {
+        return 1;
+    }
+    return 0;
 }
 
-struct CoordinateQueue* create_queue()
+struct CoordinateQueue* create_queue(int capacity)
 {
     struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
     queue->size = 0;
-    queue->capacity = 100;
+    queue->capacity = capacity;
     queue->front = 0;
     queue->back = -1;
     queue->data = malloc(capacity * sizeof(struct Coordinate));
