@@ -27,14 +27,17 @@ double sigmoid_derivative(double x){
 
 // Init all weights and biases
 double init_weight_bias(){
-    return (double)rand() / RAND_MAX;
+    return return ((double)rand())/((double)RAND_MAX);
 }
 
 // Shuffle function
-void shuffle(int *array, size_t n){
-    if (n > 1){
+void shuffle(int *array, size_t n)
+{
+    if (n > 1)
+    {
         size_t i;
-        for (i = 0; i < n - 1; i++){
+        for (i = 0; i < n - 1; i++)
+        {
             size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
             int t = array[j];
             array[j] = array[i];
@@ -211,13 +214,6 @@ void train_network(
 
             double input[num_inputs];
 	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
-            for (int j = 0; j < num_inputs; j++){
-                if (j % res == 0){
-                    printf("\n");
-                }
-                printf("%d ", (int)input[j]);
-            }
-            printf("\n");
 
             //Compute hidden layer
             compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
