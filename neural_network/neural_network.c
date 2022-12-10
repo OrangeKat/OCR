@@ -371,7 +371,7 @@ int main(int argc, char *argv[]) {
             index = j;
         }
     }
-    printf("Result %d: %d\n", n, index);
+    printf("Result: %d\n", index);
 
     return index;
 }   
