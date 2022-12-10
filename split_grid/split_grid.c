@@ -53,7 +53,7 @@ void split_image(char *filename){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(image,&rect,cell,NULL);
-            remove_border_lines(cell);
+            //remove_border_lines(cell);
             char *cell_name = malloc(28);
 	        sprintf(cell_name, "output/cell_%d.png",n);
             IMG_SavePNG(cell,cell_name);
@@ -65,8 +65,33 @@ void split_image(char *filename){
     }
 }
 
+
+
+//splits an image into 9 images of a sudoku grids squares
+void split_squares(SDL_Surface *surface){
+    int height = surface -> h;
+    int width = surface -> w;
+    int square_height = height/3;
+    int square_width = width/3;
+    int x = 0,y = 0;
+    int *n = malloc(sizeof(int));
+    *n = 1;
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            SDL_Rect rect = {x,y,square_width,square_height};
+            SDL_Surface *square = SDL_CreateRGBSurface(0,square_width,square_height,32,0,0,0,0);
+            SDL_BlitSurface(surface,&rect,square,NULL);
+            //remove_border_lines(square);
+            split_cells(square, n);
+            x += square_width;
+        }
+        x = 0;
+        y += square_height;
+    }
+}
+
 //splits an image into 9 images of a sudoku grids cells
-void split_cells(SDL_Surface *surface, int square_number){
+void split_cells(SDL_Surface *surface, int *n){
     int height = surface -> h;
     int width = surface -> w;
     int cell_height = height/9;
@@ -77,35 +102,15 @@ void split_cells(SDL_Surface *surface, int square_number){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(surface,&rect,cell,NULL);
-            remove_border_lines(cell);
+            //remove_border_lines(cell);
             char *cell_name = malloc(28);
-            sprintf(cell_name, "output/cell_%d.png", square_number + 10 * (i+j));
+            sprintf(cell_name, "output/cell_%d.png", *n);
             IMG_SavePNG(cell,cell_name);
             x += cell_width;
+            *n += 1;
         }
         x = 0;
         y += cell_height;
-    }
-}
-
-//splits an image into 9 images of a sudoku grids squares
-void split_squares(SDL_Surface *surface){
-    int height = surface -> h;
-    int width = surface -> w;
-    int square_height = height/3;
-    int square_width = width/3;
-    int x = 0,y = 0;
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            SDL_Rect rect = {x,y,square_width,square_height};
-            SDL_Surface *square = SDL_CreateRGBSurface(0,square_width,square_height,32,0,0,0,0);
-            SDL_BlitSurface(surface,&rect,square,NULL);
-            remove_border_lines(square);
-            split_cells(square, i + j);
-            x += square_width;
-        }
-        x = 0;
-        y += square_height;
     }
 }
 
