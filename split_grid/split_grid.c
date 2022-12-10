@@ -14,7 +14,7 @@ void remove_border(int* array, int width, int height){
         if (row < 0 || row >= height || col < 0 || col >= width){
             continue;
         }
-        if (array[row * height + col] == 0){
+        if (array[row * height + col] == 1){
             continue;
         }
         array[row * height + col] = 1;
