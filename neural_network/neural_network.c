@@ -210,7 +210,8 @@ void train_network(
             int x = training_set_order[n];
 
             double input[num_inputs]; 
-            memcpy(input, convert_to_array(training_inputs[x]), num_inputs * sizeof(double));
+            SDL_Surface *image = IMG_Load(training_inputs[x]);
+            memcpy(input, convert_to_array(image), num_inputs * sizeof(double));
             remove_border(input);
 
             // Forward pass
@@ -355,7 +356,7 @@ int main(int argc, char *argv[]) {
             sprintf(filename, "%s%s", argv[1], entry->d_name);
             printf("Treating %s...\n",filename);
             double input[num_inputs];
-            SDL_Surface *image = load_image(filename);
+            SDL_Surface *image = IMG_Load(filename);
             memcpy(input, convert_to_array(image), sizeof(double) * num_inputs);
             SDL_FreeSurface(image);
             remove_border(input);
