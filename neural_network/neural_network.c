@@ -276,20 +276,20 @@ void train_network(
                 for(int k=0; k<num_output; k++) {
                     errorHidden+=deltaOutput[k]*output_layer_weights[j][k];
                 }
-                deltaHidden[j] = errorHidden*dSigmoid(hidden_layer[j]);
+                deltaHidden[j] = errorHidden*sigmoid_derivative(hidden_layer[j]);
             }
             
             for (int j=0; j<num_output; j++) {
-                output_layer_bias[j] += deltaOutput[j]*lr;
+                output_layer_bias[j] += deltaOutput[j]*learning_rate;
                 for (int k=0; k<num_hidden; k++) {
-                    output_layer_weights[k][j]+=hidden_layer[k]*deltaOutput[j]*lr;
+                    output_layer_weights[k][j]+=hidden_layer[k]*deltaOutput[j]*learning_rate;
                 }
             }
             
             for (int j=0; j<num_hidden; j++) {
-                hidden_layer_bias[j] += deltaHidden[j]*lr;
+                hidden_layer_bias[j] += deltaHidden[j]*learning_rate;
                 for(int k=0; k<num_inputs; k++) {
-                    hidden_layer_weights[k][j]+=input[k]*deltaHidden[j]*lr;
+                    hidden_layer_weights[k][j]+=input[k]*deltaHidden[j]*learning_rate;
                 }
             }
         }
