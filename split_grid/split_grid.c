@@ -8,62 +8,34 @@
 #include <SDL2/SDL.h>
 
 void remove_border_lines(SDL_Surface *surface) {
-	SDL_LockSurface(surface);
-
-	// Loop through the pixels at the top and bottom of the image and find the first and last non-black pixels
 	int top = -1;
-	int bottom = -1;
-	for (int i = 0; i < surface->w; i++) {
-		for (int j = 0; j < surface->h; j++) {
-			Uint32 *pixel = (Uint32*)surface->pixels + j * surface->w + i;
-			Uint8 r, g, b;
-			SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
-			if (r != 0 || g != 0 || b != 0) {
-				if (top == -1) {
-					top = j;
-				}
-				bottom = j;
-			}
-		}
-	}
-
-	// Loop through the pixels at the left and right of the image and find the first and last non-black pixels
-	int left = -1;
-	int right = -1;
-	for (int i = 0; i < surface->h; i++) {
-		for (int j = 0; j < surface->w; j++) {
-			Uint32 *pixel = (Uint32*)surface->pixels + i * surface->w + j;
-			Uint8 r, g, b;
-			SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
-			if (r != 0 || g != 0 || b != 0) {
-				if (left == -1) {
-					left = j;
-				}
-				right = j;
-			}
-		}
-	}
-
-	// Calculate the new width and height of the image
-	int new_width = right - left + 1;
-	int new_height = bottom - top + 1;
-
-	// Create
-    SDL_Surface *new_surface = SDL_CreateRGBSurface(0, new_width, new_height, 32, 0, 0, 0, 0);
-
-    // Loop through the pixels in the new surface and copy the corresponding pixels from the original surface
-    for (int i = 0; i < new_width; i++) {
-        for (int j = 0; j < new_height; j++) {
-            Uint32 *old_pixel = (Uint32*)surface->pixels + (j + top) * surface->w + (i + left);
-            Uint32 *new_pixel = (Uint32*)new_surface->pixels + j * new_surface->w + i;
-            *new_pixel = *old_pixel;
+    int bottom = -1;
+    int n = surface->h;
+    Uint32* pixels = surface->pixels;
+    for (int i = 0; i < n; i++){
+        Uint8 r, g, b;
+        SDL_GetRGB(pixels[i * n + i], surface->format, &r, &g, &b);
+        if ((r + g + b) / 3 > 128){
+            top = i;
+            break;
         }
     }
-
-    SDL_UnlockSurface(surface);
-
-    // Replace the original surface with the new one
-    *surface = *new_surface;
+    for (int i = n - 1; i >= 0; i--){
+        Uint8 r, g, b;
+        SDL_GetRGB(pixels[i * n + i], surface->format, &r, &g, &b);
+        if ((r + g + b) / 3 > 128){
+            bottom = i;
+            break;
+        }
+    }
+    SDL_Rect rect;
+    rect.x = top;
+    rect.y = top;
+    rect.w = bottom - top;
+    rect.h = bottom - top;
+    SDL_Surface *new_surface = SDL_CreateRGBSurface(0,rect.w,rect.h,32,0,0,0,0);
+    SDL_BlitSurface(surface,&rect,new_surface,NULL);
+    SDL_BlitSurface(new_surface,NULL,surface,NULL);
 }
 
 
@@ -137,12 +109,20 @@ void split_squares(SDL_Surface *surface){
     }
 }
 
+// Function that resizes an image to an nxn image
+SDL_Surface *resize_image(SDL_Surface *image, int n){
+    SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
+    SDL_BlitScaled(image,NULL,resized_image,NULL);
+    return resized_image;
+}
+
 int main(int argc, char *argv[]){
     if (argc != 2){
         printf("Please provide a filename\n");
         return 1;
     }
     SDL_Surface *image = IMG_Load(argv[1]);
+    image = resize_image(image, 900);
     split_squares(image);
     return 0;
 }
