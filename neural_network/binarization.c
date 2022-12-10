@@ -39,6 +39,12 @@ double *convert_to_array(SDL_Surface  *image){
     return array;
 }
 
+// Function that loads an image
+SDL_Surface *load_image(char *path){
+    SDL_Surface *image = IMG_Load(path);
+    return image;
+}
+
 // Function that removes the border lines from a cell
 void remove_border(double* array){
     for (int i = 0; i < res; i++){
