@@ -33,9 +33,8 @@ int *convert_to_array(SDL_Surface *image){
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             
-            int index = i * image->pitch / 4 + j;
             Uint8 r, g, b;
-            SDL_GetRGB(pixels[index], image->format, &r, &g, &b);
+            SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
                 array[i * height + j] = 0;
