@@ -250,7 +250,7 @@ void train_network(
                 }
             }
 
-            printf("Expected: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n", 
+            printf("Expected: %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", 
             training_outputs[k][0], training_outputs[k][1], training_outputs[k][2], 
             training_outputs[k][3], training_outputs[k][4], training_outputs[k][5], 
             training_outputs[k][6], training_outputs[k][7], training_outputs[k][8], 
