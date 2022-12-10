@@ -138,6 +138,7 @@ void compute_hidden_layer(double* hidden_layer, double* hidden_layer_bias,
         double activation = hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
             activation += training_input[p] * hidden_layer_weights[p][j];
+            printf("%f\n", activation);
         }
         hidden_layer[j] = sigmoid(activation);
     }
@@ -151,6 +152,7 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
         double activation = output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
             activation += hidden_layer[p] * output_layer_weights[p][j];
+            printf("%f\n", activation);
         }
         output_layer[j] = sigmoid(activation);
     }
@@ -216,6 +218,7 @@ void train_network(
                 }
                 printf("%d ", (int)input[j]);
             }
+            printf("\n");
 
             //Compute hidden layer
             compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
