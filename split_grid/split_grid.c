@@ -27,9 +27,9 @@ int *convert_to_array(SDL_Surface *image){
             SDL_GetRGB(pixels[index], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 0;
-            } else {
                 array[i * height + j] = 1;
+            } else {
+                array[i * height + j] = 0;
             }
         }
     }
@@ -44,7 +44,7 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height){
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
             // Set the pixel to black or white based on the value in the 2D array
-            ((Uint32*)surface->pixels)[y * height + x] = array[y * height + x] == 0 ? 0xFFFFFF : 0x000000;
+            ((Uint32*)surface->pixels)[y * height + x] = array[y * height + x] == 1 ? 0xFFFFFF : 0x000000;
         }
     }
     return surface;
