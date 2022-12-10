@@ -17,6 +17,7 @@
 
 // Activation function
 double sigmoid(double x){
+    x *= 0.01;
     return 1/(1+exp(-x));
 }
 
