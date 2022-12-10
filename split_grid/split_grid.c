@@ -54,7 +54,7 @@ struct CoordinateQueue create_queue()
 {
     struct CoordinateQueue queue;
     queue.size = 0;
-    queue.capacity = 10;
+    queue.capacity = 1;
     queue.front = 0;
     queue.back = -1;
     queue.data = malloc(queue.capacity * sizeof(struct Coordinate));
