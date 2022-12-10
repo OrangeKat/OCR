@@ -348,52 +348,54 @@ int main(int argc, char *argv[]) {
     FILE *out = fopen("grid.txt", "w");
     int i = 1;
     while ((entry = readdir(dir)) != NULL) {
-        printf("Treating %s%s...\n",argv[1] , entry->d_name);
-        char *filename = malloc(sizeof(char) * 100);
-        sprintf(filename, "%s%s", argv[1], entry->d_name);
-        double input[num_inputs];
-        memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
-        remove_border(input);
+        if (entry->d_type == DT_REG) {
+            char *filename = malloc(sizeof(char) * 100);
+            sprintf(filename, "%s%s", argv[1], entry->d_name);
+            printf("Treating %s...\n",filename);
+            double input[num_inputs];
+            memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
+            remove_border(input);
 
-        // Forward pass
+            // Forward pass
 
-        for (int j=0; j<num_hidden; j++) {
-            double activation=hidden_layer_bias[j];
-             for (int k=0; k<num_inputs; k++) {
-                activation+=input[k]*hidden_layer_weights[k][j] * 0.01;
+            for (int j=0; j<num_hidden; j++) {
+                double activation=hidden_layer_bias[j];
+                 for (int k=0; k<num_inputs; k++) {
+                    activation+=input[k]*hidden_layer_weights[k][j] * 0.01;
+                }
+                hidden_layer[j] = sigmoid(activation);
             }
-            hidden_layer[j] = sigmoid(activation);
-        }
 
-        for (int j=0; j<num_output; j++) {
-            double activation=output_layer_bias[j];
-            for (int k=0; k<num_hidden; k++) {
-                activation+=hidden_layer[k]*output_layer_weights[k][j] * 0.01;
+            for (int j=0; j<num_output; j++) {
+                double activation=output_layer_bias[j];
+                for (int k=0; k<num_hidden; k++) {
+                    activation+=hidden_layer[k]*output_layer_weights[k][j] * 0.01;
+                }
+                output_layer[j] = sigmoid(activation);
             }
-            output_layer[j] = sigmoid(activation);
-        }
 
-        int index = 0;
-        for (int i = 0; i < num_output; i++){
-            if (output_layer[i] > output_layer[index]){
-                index = i;
+            int index = 0;
+            for (int i = 0; i < num_output; i++){
+                if (output_layer[i] > output_layer[index]){
+                    index = i;
+                }
             }
-        }
 
-        printf("Result %d: %d\n", i, index);
+            printf("Result %d: %d\n", i, index);
 
-        fprintf(out, "%c", index == 0 ? '.' : ((char)index));
-        if (i % 9 == 0) {
-            fprintf(out, "\n");
-	    } 
-        else if (i % 3 == 0){
-            fprintf(out, " ");
-        }
-        if (i % 27 == 0) {
-            fprintf(out, "\n");
-        }
+            fprintf(out, "%c", index == 0 ? '.' : ((char)index));
+            if (i % 9 == 0) {
+                fprintf(out, "\n");
+	        } 
+            else if (i % 3 == 0){
+                fprintf(out, " ");
+            }
+            if (i % 27 == 0) {
+                fprintf(out, "\n");
+            }
 
-        i++;
+            i++;
+        }
     }
     fclose(out);
     return 1;
