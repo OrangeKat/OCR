@@ -183,9 +183,7 @@ double *compute_output_layer(double output_layer[num_output], double* output_lay
             activation += hidden_layer[p] * output_layer_weights[p][j];
         }
         output_layer[j] = sigmoid(activation);
-        printf("%f ", activation);
     }
-    printf("\n");
     return output_layer;
 }
 
@@ -344,7 +342,7 @@ int *main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        int epochs = 1;
+        int epochs = 10000;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
