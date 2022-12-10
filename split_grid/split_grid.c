@@ -21,14 +21,14 @@ int *convert_to_array(SDL_Surface *image){
     int *array = malloc(height * width * sizeof(int));
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
-            int index = i * image->pitch / 4 + j;
+        
             Uint8 r, g, b;
-            SDL_GetRGB(pixels[index], image->format, &r, &g, &b);
+            SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[index] = 0;
+                array[i * height + j] = 0;
             } else {
-                array[index] = 1;
+                array[i * height + j] = 1;
             }
         }
     }
@@ -50,7 +50,7 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height)
             int index = y * surface->pitch / 4 + x;
 
             // Set the pixel to black or white based on the value in the 2D array
-            ((Uint32*)surface->pixels)[index] = array[y * height + x] ? 0xFFFFFF : 0x000000;
+            ((Uint32*)surface->pixels)[y * height + x] = array[y * height + x] ? 0xFFFFFF : 0x000000;
         }
     }
 
