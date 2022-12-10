@@ -18,7 +18,7 @@ int *convert_to_array(SDL_Surface *image){
     const int height = image->h;
     const int width = image->w;
     Uint32* pixels = image->pixels;
-    double *array = malloc(height * width * sizeof(int));
+    int *array = malloc(height * width * sizeof(int));
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
 
