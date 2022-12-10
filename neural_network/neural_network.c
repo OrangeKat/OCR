@@ -349,8 +349,8 @@ int main(int argc, char *argv[]) {
     FILE *out = fopen("grid.txt", "w");
 
     for (int n = 1; n <= 81; n++) {
-        char tmp1[] = "%s", argv[1];
-        int tmp2 = n;
+        const char *tmp1 = "%s", argv[1];
+        const int tmp2 = n;
         const char filename[] = "%scell_%d.png", tmp1, tmp2;
         printf("Treating %s...\n",filename);
         double input[num_inputs];
@@ -382,13 +382,13 @@ int main(int argc, char *argv[]) {
         }
         printf("Result %d: %d\n", n, index);
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
-        if (i % 9 == 0) {
+        if (n % 9 == 0) {
             fprintf(out, "\n");
 	    } 
-        else if (i % 3 == 0){
+        else if (n % 3 == 0){
             fprintf(out, " ");
         }
-        if (i % 27 == 0) {
+        if (n % 27 == 0) {
             fprintf(out, "\n");
         }
     }
