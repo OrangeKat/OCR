@@ -348,6 +348,7 @@ int main(int argc, char *argv[]) {
     FILE *out = fopen("grid.txt", "w");
     int i = 1;
     while ((entry = readdir(dir)) != NULL) {
+        printf("Treating %s...\n", entry->d_name);
         char *filename = malloc(sizeof(char) * 100);
         sprintf(filename, "%s%s", argv[1], entry->d_name);
         double input[num_inputs];
@@ -379,7 +380,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        printf("Result %d: %c", i, index == 0 ? '.' : ((char)index));
+        printf("Result %d: %c\n", i, index == 0 ? '.' : ((char)index));
 
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
