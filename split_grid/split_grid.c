@@ -47,11 +47,9 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height){
     // Create a new SDL_Surface with the desired width and height
     SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
     // Iterate through the 2D array and set the corresponding pixels on the SDL_Surface
-    for (int y = 0; y < height; y++){
-        for (int x = 0; x < width; x++){
-            // Set the pixel to black or white based on the value in the 2D array
-            ((Uint32*)surface->pixels)[y * height + x] = array[y * height + x] == 1 ? 0xFFFFFF : 0x000000;
-        }
+    for (int i = 0; i < height * width; i++){
+        // Set the pixel to black or white based on the value in the 2D array
+        ((Uint32*)surface->pixels)[i] = array[i] == 1 ? 0xFFFFFF : 0x000000;
     }
     return surface;
 }
