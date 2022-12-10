@@ -372,9 +372,9 @@ int main(int argc, char *argv[]) {
             output_layer[j] = sigmoid(activation);
         }
         int index = 0;
-        for (int i = 0; i < num_output; i++){
-            if (output_layer[i] > output_layer[index]){
-                index = i;
+        for (int j = 0; j < num_output; j++){
+            if (output_layer[j] > output_layer[index]){
+                index = j;
             }
         }
         printf("Result %d: %d\n", i, index);
