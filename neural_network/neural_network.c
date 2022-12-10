@@ -347,7 +347,7 @@ int *main(){
     printf("Treating grid...\n");
     static int grid[81];
     
-    for (int i = 0; i < 81; i++){
+    for (int i = 1; i <= 81; i++){
         // Find out the number in the image (input: image of cell, output: number)
         char input[20];
         sprintf(input, "grid/cell_%d.png", i);
@@ -414,7 +414,7 @@ int *main(){
         printf("%d, ", grid[i]);
     }
     printf("\n");
-    
+
     return grid;
     
 }
