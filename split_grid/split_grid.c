@@ -10,21 +10,23 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 }
 
 // Function that removes the border lines from a cell
-void remove_border(int* array, int index, int width, int height){
-    if (array[index] == 0){
+void remove_border(int *array, int index, int width, int height, int *M){
+    
+    if (array[index] == 0 && M[index] == -1){
+        M[index] = -1;
         int x = index % width;
-        int y = index / width;
-        if (!(x == 0)){
-            remove_border(array, y * height + x - 1, width, height);
+        int y = index / height;
+        if (!(x - 1 < 0)){
+            remove_border(array, y * height + x - 1, width, height, M);
         }
-        if (!(x == width - 1)){
-            remove_border(array, y * height + x + 1, width, height);
+        if (!(x + 1 > width)){
+            remove_border(array, y * height + x + 1, width, height, M);
         }
-        if (!(y == 0)){
-            remove_border(array, (y - 1) * height + x, width, height);
+        if (!(y - 1 < 0)){
+            remove_border(array, (y - 1) * height + x, width, height, M);
         }
-        if (!(y == height - 1)){
-            remove_border(array, (y + 1) * height + x, width, height);
+        if (!(y + 1 > height)){
+            remove_border(array, (y + 1) * height + x, width, height, M);
         }
         array[index] = 1;
     }
@@ -65,8 +67,8 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height){
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
     image = resize_image(image, 450);
-    int height = image->h;
-    int width = image->w;
+    int height = 450;
+    int width = 450;
     int cell_height = height/9;
     int cell_width = width/9;
     int x = 0,y = 0;
@@ -74,7 +76,8 @@ void split_image(char *filename){
 
     int *array = malloc(sizeof(int) * height * width);
     memcpy(array, convert_to_array(image), sizeof(int) * height * width);
-    remove_border(array, 0, width, height);
+    int *M = array;
+    remove_border(array, 0, width, height, M);
     image = create_surface_from_2d_array(array, width, height);
 
     for (int i = 0; i < 9; i++){
