@@ -277,7 +277,7 @@ void train_network(
     - Compute Output lair 
 */
 
-int main(char *argv[], int argc) {
+int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("Usage: Input cell image\n");
         return 1;
