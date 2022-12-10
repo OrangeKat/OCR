@@ -243,11 +243,11 @@ void train_network(
             double input[num_inputs];
 	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
 
-            //Compute hidden layer
-            hidden_layer = compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
+            // Compute Hidden lair
+            memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input), sizeof(double) * num_hidden);
 
-            //Compute output layer
-            output_layer = compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+            // Compute Output lair
+            memcpy(output_layer, compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer), sizeof(double) * num_output);
 
             //Compute change in output layer
             double delta_output[num_output];
@@ -378,9 +378,9 @@ int *main(){
     double input_cell[num_inputs];
     memcpy(input_cell, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
     // Compute Hidden lair
-    hidden_layer = compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell);
+    memcpy(hidden_layer, compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input_cell), sizeof(double) * num_hidden);
     // Compute Output lair
-    output_layer = compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer);
+    memcpy(output_layer, compute_output_layer(output_layer, output_layer_bias, output_layer_weights, hidden_layer), sizeof(double) * num_output);
     // Find the index of the highest value in the output layer
     
     for (int n = 0; n < num_output; n++){
