@@ -19,7 +19,7 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 // Function that converts a black and white image to a array of 0s and 1s
 double *convert_to_array(char path[]){
     SDL_Surface *image = IMG_Load(path);
-    //image = resize_image(image, res);
+    image = resize_image(image, res);
     int height = image->h;
     int width = image->w;
     Uint32* pixels = image->pixels;
