@@ -298,7 +298,7 @@ int main(int argc, char *argv[]) {
         output_layer_weights[i] = malloc(num_output * sizeof(double));
     }
 
-    
+    /*
     // Ask to load weights and biases or init new ones
     char *answer = malloc(sizeof(char));
     printf("Load weights and biases? (y/n): \n");
@@ -311,6 +311,29 @@ int main(int argc, char *argv[]) {
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
+        int epochs = 10000;
+        // Init weights and biases and train network
+        train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
+            hidden_layer_weights, output_layer_weights);
+    }
+    */
+
+    DIR *d = opendir("bin");
+    struct dirent *entry;
+    bool found = 0;
+    while ((entry = readdir(d)) != NULL){
+        if (entry->d_name == "weights_biases.txt")
+            found = 1;
+            break;
+    }
+    if (found) {
+        // Load weights and biases
+        char path[] = "bin/weights_biases.txt";
+        load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
+        printf("Weights and biases loaded and set.\n");
+    } 
+    else {
+        printf("No weights and biases found. Initializing new ones...\n")
         int epochs = 10000;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
