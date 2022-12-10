@@ -19,13 +19,13 @@ void remove_border(int *array, int index, int width, int height, int *M){
         if (!(x - 1 < 0)){
             remove_border(array, y * height + x - 1, width, height, M);
         }
-        if (!(x + 1 > width)){
+        if (!(x + 1 >= width)){
             remove_border(array, y * height + x + 1, width, height, M);
         }
         if (!(y - 1 < 0)){
             remove_border(array, (y - 1) * height + x, width, height, M);
         }
-        if (!(y + 1 > height)){
+        if (!(y + 1 >= height)){
             remove_border(array, (y + 1) * height + x, width, height, M);
         }
         array[index] = 1;
