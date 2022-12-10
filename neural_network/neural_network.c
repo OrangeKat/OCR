@@ -153,37 +153,7 @@ void convert_images_to_training_data(char path[], double* training_set_inputs[nu
 /*
     Neural network functions:
     - train_neural_network
-    - compute hidden layer
-    - compute output layer
 */ 
-
-// Compute hidden layer
-double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_layer_bias, 
-    double** hidden_layer_weights, double training_input[num_inputs]){
-    
-    for (int j = 0; j < num_hidden; j++){
-        double activation = hidden_layer_bias[j];
-        for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * hidden_layer_weights[p][j];
-        }
-        hidden_layer[j] = sigmoid(activation);
-    }
-    return hidden_layer;
-}
-
-// Compute output layer
-double *compute_output_layer(double output_layer[num_output], double* output_layer_bias, 
-    double** output_layer_weights, double* hidden_layer){
-
-    for (int j = 0; j < num_output; j++){
-        double activation = output_layer_bias[j];
-        for (int p = 0; p < num_hidden; p++){
-            activation += hidden_layer[p] * output_layer_weights[p][j];
-        }
-        output_layer[j] = sigmoid(activation);
-    }
-    return output_layer;
-}
 
 // Train neural network
 void train_network(
@@ -307,8 +277,11 @@ void train_network(
     - Compute Output lair 
 */
 
-int *main(){
-
+int main(char argv[], int argc) {
+    if (argc != 2) {
+        printf("Usage: <path to image>\n", argv[0]);
+        return 1;
+    }
     double hidden_layer[num_hidden]; //= malloc(num_hidden * sizeof(double));
     double output_layer[num_output]; //= malloc(num_output * sizeof(double)); 
 
@@ -344,45 +317,10 @@ int *main(){
             hidden_layer_weights, output_layer_weights);
     }
     
-    printf("Treating grid...\n");
-    static int grid[81];
+    printf("Treating cell...\n");
     
-    for (int i = 1; i <= 81; i++){
-        // Find out the number in the image (input: image of cell, output: number)
-        char input[20];
-        sprintf(input, "grid/cell_%d.png", i);
-        double input_cell[num_inputs];
-        memcpy(input_cell, convert_to_array(input), sizeof(double) * num_inputs);
-        // Forward pass
-            
-        for (int j=0; j<num_hidden; j++) {
-            double activation=hidden_layer_bias[j];
-             for (int k=0; k<num_inputs; k++) {
-                activation+=input[k]*hidden_layer_weights[k][j] * 0.01;
-            }
-            hidden_layer[j] = sigmoid(activation);
-        }
-        
-        for (int j=0; j<num_output; j++) {
-            double activation=output_layer_bias[j];
-            for (int k=0; k<num_hidden; k++) {
-                activation+=hidden_layer[k]*output_layer_weights[k][j] * 0.01;
-            }
-            output_layer[j] = sigmoid(activation);
-        }
-        // Find the index of the highest value in the output layer
-        int index = 0;
-        for (int n = 0; n < num_output; n++){
-            if (output_layer[n] > output_layer[index]){
-                index = n;
-            }
-        }
-        grid[i] = index;
-    }
-
-    /*
     double input[num_inputs];
-    memcpy(input, convert_to_array("grid/cell_1.png"), sizeof(double) * num_inputs);
+    memcpy(input, convert_to_array(argv[0]), sizeof(double) * num_inputs);
 
     // Forward pass
             
@@ -406,15 +344,7 @@ int *main(){
         printf("%f, ", output_layer[n]);
     }
     printf("\n");
-    */
-    for (int i = 0; i < 81; i++){
-        if (i % 9 == 0){
-            printf("\n");
-        }
-        printf("%d, ", grid[i]);
-    }
-    printf("\n");
 
-    return grid;
+    return 1;
     
 }
