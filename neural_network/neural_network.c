@@ -346,6 +346,7 @@ int *main(){
     
     printf("Treating grid...\n");
     static int grid[81];
+    /*
     for (int i = 0; i < 81; i++){
         // Find out the number in the image (input: image of cell, output: number)
         char input[20];
@@ -379,9 +380,9 @@ int *main(){
         grid[i] = index;
     }
 
-    /*
+    */
     double input[num_inputs];
-    memcpy(input, convert_to_array("bin/training_set/1.png"), sizeof(double) * num_inputs);
+    memcpy(input, convert_to_array("grid/cell_1.png"), sizeof(double) * num_inputs);
 
     // Forward pass
             
@@ -405,12 +406,14 @@ int *main(){
         printf("%f, ", output_layer[n]);
     }
     printf("\n");
-    */
+    /*
     for (int i = 0; i < 81; i++){
         if (i % 9 == 0){
             printf("\n");
         }
         printf("%d, ", grid[i]);
     }
+    */
     return grid;
+    
 }
