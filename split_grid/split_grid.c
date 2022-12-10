@@ -28,6 +28,65 @@ void split_image(char *filename){
     }
 }
 
+void remove_border_lines(SDL_Surface *surface) {
+    SDL_LockSurface(surface);
+
+    // Loop through the pixels at the top and bottom of the image and find the first and last non-black pixels
+    int top = -1;
+    int bottom = -1;
+    for (int i = 0; i < surface->w; i++) {
+        for (int j = 0; j < surface->h; j++) {
+            Uint32 *pixel = (Uint32*)surface->pixels + j * surface->w + i;
+            Uint8 r, g, b;
+            SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
+                if (r != 0 || g != 0 || b != 0) {
+                    if (top == -1) {
+                        top = j;
+                }
+                bottom = j;
+            }
+        }
+    }
+
+    // Loop through the pixels at the left and right of the image and find the first and last non-black pixels
+    int left = -1;
+    int right = -1;
+    for (int i = 0; i < surface->h; i++) {
+        for (int j = 0; j < surface->w; j++) {
+            Uint32 *pixel = (Uint32*)surface->pixels + i * surface->w + j;
+            Uint8 r, g, b;
+            SDL_GetRGB(*pixel, surface->format, &r, &g, &b);
+            if (r != 0 || g != 0 || b != 0) {
+                if (left == -1) {
+                    left = j;
+                }
+                right = j;
+            }
+        }
+    }
+
+    // Calculate the new width and height of the image
+    int new_width = right - left + 1;
+    int new_height = bottom - top + 1;
+
+    // Create a new SDL_Surface with the new width and height
+    SDL_Surface *new_surface = SDL_CreateRGBSurface(0, new_width, new_height, 32, 0, 0, 0, 0);
+
+    // Loop through the pixels in the new surface and copy the corresponding pixels from the original surface
+    for (int i = 0; i < new_width; i++) {
+        for (int j = 0; j < new_height; j++) {
+            Uint32 *old_pixel = (Uint32*)surface->pixels + (j + top) * surface->w + (i + left);
+            Uint32 *new_pixel = (Uint32*)new_surface->pixels + j * new_surface->w + i;
+            *new_pixel = *old_pixel;
+        }
+    }
+
+    SDL_UnlockSurface(surface);
+
+    // Replace the original surface with the new one
+    *surface = *new_surface;
+}
+
 int main(int argc, char *argv[]){
     if (argc != 2){
         printf("Please provide a filename\n");
