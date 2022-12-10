@@ -35,6 +35,7 @@ void remove_border_lines(SDL_Surface *surface) {
 //function that splits a png of a sudoku grid into 81 images of the individual cells
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
+    remove_border_lines(image);
     int height = image->h;
     int width = image->w;
     int cell_height = height/9;
@@ -46,7 +47,6 @@ void split_image(char *filename){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(image,&rect,cell,NULL);
-            remove_border_lines(cell);
             cell = resize_image(cell,16);
             char *cell_name = malloc(28);
 	        sprintf(cell_name, "output/cell_%d.png",n);
