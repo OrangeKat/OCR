@@ -348,14 +348,17 @@ int main(int argc, char *argv[]) {
 
     FILE *out = fopen("grid.txt", "w");
 
-    for (int i = 1; i <= 81; i++) {
-        const char filename[] = "%scell_%d.png", argv[1], i;
+    for (int n = 1; n <= 81; n++) {
+        char tmp1[] = "%s", argv[1];
+        int tmp2 = n;
+        const char filename[] = "%scell_%d.png", tmp1, tmp2;
         printf("Treating %s...\n",filename);
         double input[num_inputs];
         SDL_Surface *image = load_image(filename);
         memcpy(input, convert_to_array(image), sizeof(double) * num_inputs);
         SDL_FreeSurface(image);
         remove_border(input);
+
         // Forward pass
         for (int j=0; j<num_hidden; j++) {
             double activation=hidden_layer_bias[j];
@@ -377,7 +380,7 @@ int main(int argc, char *argv[]) {
                 index = j;
             }
         }
-        printf("Result %d: %d\n", i, index);
+        printf("Result %d: %d\n", n, index);
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
             fprintf(out, "\n");
