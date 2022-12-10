@@ -5,31 +5,48 @@
 
 // function that removes the border lines from a cell image
 void remove_border_lines(SDL_Surface *surface) {
-  SDL_LockSurface(surface);
-
-  // Loop through the pixels at the top and bottom of the image and set them to white (255, 255, 255)
-  for (int i = 0; i < surface->w; i++) {
-    Uint32 *top_pixel = (Uint32*)surface->pixels + i;
-    Uint32 *bottom_pixel = (Uint32*)surface->pixels + (surface->h - 1) * surface->w + i;
-    *top_pixel = SDL_MapRGB(surface->format, 255, 255, 255);
-    *bottom_pixel = SDL_MapRGB(surface->format, 255, 255, 255);
-  }
-
-  // Loop through the pixels at the left and right of the image and set them to white (255, 255, 255)
-  for (int i = 0; i < surface->h; i++) {
-    Uint32 *left_pixel = (Uint32*)surface->pixels + i * surface->w;
-    Uint32 *right_pixel = (Uint32*)surface->pixels + i * surface->w + surface->w - 1;
-    *left_pixel = SDL_MapRGB(surface->format, 255, 255, 255);
-    *right_pixel = SDL_MapRGB(surface->format, 255, 255, 255);
-  }
-
-  SDL_UnlockSurface(surface);
+    int found_black = 1;
+    Uint32 *pixels = surface->pixels;
+    int height = surface->h;
+    int width = surface->w;
+    int start = 0;
+    while (found_black == 1){
+        found_black = 0;
+        for (int i = start; i < width; i++){
+            Uint8 r,g,b;
+            SDL_GetRGB(pixels[height + i],surface->format,&r,&g,&b);
+            if (r == 0 && g == 0 && b == 0){
+                found_black = 1;
+                SDL_MapRGB(surface->format, 255, 255, 255);
+            }
+            SDL_GetRGB(pixels[i],surface->format,&r,&g,&b);
+            if (r == 0 && g == 0 && b == 0){
+                found_black = 1;
+                SDL_MapRGB(surface->format, 255, 255, 255);
+            }
+        }
+        for (int j = start; j < surface->h; j++){
+            Uint8 r,g,b;
+            SDL_GetRGB(pixels[j * height],surface->format,&r,&g,&b);
+            if (r == 0 && g == 0 && b == 0){
+                found_black = 1;
+                SDL_MapRGB(surface->format, 255, 255, 255);
+            }
+            SDL_GetRGB(pixels[j * height + width - 1],surface->format,&r,&g,&b);
+            if (r == 0 && g == 0 && b == 0){
+                found_black = 1;
+                SDL_MapRGB(surface->format, 255, 255, 255);
+            }
+        }
+        start++;
+        height--;
+        width--;
+    }
 }
 
 //function that splits a png of a sudoku grid into 81 images of the individual cells
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
-    remove_border_lines(image);
     int height = image->h;
     int width = image->w;
     int cell_height = height/9;
@@ -41,6 +58,7 @@ void split_image(char *filename){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(image,&rect,cell,NULL);
+            remove_border_lines(cell);
             char *cell_name = malloc(28);
 	        sprintf(cell_name, "output/cell_%d.png",n);
             IMG_SavePNG(cell,cell_name);
