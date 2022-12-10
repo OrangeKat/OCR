@@ -26,9 +26,9 @@ int *convert_to_array(SDL_Surface *image){
             SDL_GetRGB(pixels[index], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 0;
+                array[index] = 0;
             } else {
-                array[i * height + j] = 1;
+                array[index] = 1;
             }
         }
     }
@@ -67,8 +67,8 @@ void split_image(char *filename){
     int x = 0,y = 0;
     int n = 1;
 
-    int *array = malloc(sizeof(int)*81);
-    memcpy(array, convert_to_array(image), sizeof(int)*81);
+    int *array = malloc(sizeof(int) * height * width);
+    memcpy(array, convert_to_array(image), sizeof(int) * height * width);
     remove_border(array,width,height);
     image = create_surface_from_2d_array(array, width, height);
 
