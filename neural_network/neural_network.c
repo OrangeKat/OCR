@@ -347,7 +347,7 @@ int main(int argc, char *argv[]) {
 
     for (int i = 1; i <= 81; i++) {
         char *filename = malloc(sizeof(char) * 100);
-        sprintf(filename, "%s/cell_%d.png", argv[1], i);
+        sprintf(filename, "%scell_%d.png", argv[1], i);
         double input[num_inputs];
         memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
         remove_border(input);
@@ -380,8 +380,8 @@ int main(int argc, char *argv[]) {
         fprintf(out, "%c", index == 0 ? '.' : ((char)index));
         if (i % 9 == 0) {
             fprintf(out, "\n");
-        if (i % 3 == 0)
-        {
+	}
+        if (i % 3 == 0){
             fprintf(out, " ");
         }
         
