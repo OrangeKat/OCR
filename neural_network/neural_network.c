@@ -155,6 +155,8 @@ void compute_output_layer(double* output_layer, double* output_layer_bias,
             printf("%f\n", activation);
         }
         output_layer[j] = sigmoid(activation);
+        printf("%f\n", output_layer[j])
+        printf("%f\n", sigmoid(activation));
     }
 }
 
