@@ -228,7 +228,7 @@ void train_network(
             //Compute change in output layer
             double delta_output[num_output];
             for (int j = 0; j < num_output; j++){
-                double error = training_outputs[j] - output_layer[j];
+                double error = training_outputs[n][j] - output_layer[j];
                 delta_output[j] = error * sigmoid_derivative(output_layer[j]);
             }
 
