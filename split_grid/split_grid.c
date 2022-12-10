@@ -11,30 +11,30 @@ void remove_border_lines(SDL_Surface *surface) {
     int width = surface->w;
     int start = 0;
     while (found_black == 1){
-        found_black = 0;
+        int k = 0;
         for (int i = start; i < width; i++){
             Uint8 r,g,b;
             SDL_GetRGB(pixels[height + i],surface->format,&r,&g,&b);
-            if (r == 0 && g == 0 && b == 0){
-                found_black = 1;
+            if (r + g + b / 3 < 128){
+                k = 1;
                 SDL_MapRGB(surface->format, 255, 255, 255);
             }
             SDL_GetRGB(pixels[i],surface->format,&r,&g,&b);
-            if (r == 0 && g == 0 && b == 0){
-                found_black = 1;
+            if (r + g + b / 3 < 128){
+                k = 1;
                 SDL_MapRGB(surface->format, 255, 255, 255);
             }
         }
         for (int j = start; j < surface->h; j++){
             Uint8 r,g,b;
             SDL_GetRGB(pixels[j * height],surface->format,&r,&g,&b);
-            if (r == 0 && g == 0 && b == 0){
-                found_black = 1;
+            if (r + g + b / 3 < 128){
+                k = 1;
                 SDL_MapRGB(surface->format, 255, 255, 255);
             }
             SDL_GetRGB(pixels[j * height + width - 1],surface->format,&r,&g,&b);
-            if (r == 0 && g == 0 && b == 0){
-                found_black = 1;
+            if (r + g + b / 3 < 128){
+                k = 1;
                 SDL_MapRGB(surface->format, 255, 255, 255);
             }
         }
