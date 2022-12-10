@@ -49,6 +49,22 @@ void remove_border_lines(SDL_Surface *surface) {
 	int new_height = bottom - top + 1;
 
 	// Create
+    SDL_Surface *new_surface = SDL_CreateRGBSurface(0, new_width, new_height, 32, 0, 0, 0, 0);
+
+    // Loop through the pixels in the new surface and copy the corresponding pixels from the original surface
+    for (int i = 0; i < new_width; i++) {
+        for (int j = 0; j < new_height; j++) {
+            Uint32 *old_pixel = (Uint32*)surface->pixels + (j + top) * surface->w + (i + left);
+            Uint32 *new_pixel = (Uint32*)new_surface->pixels + j * new_surface->w + i;
+            *new_pixel = *old_pixel;
+        }
+    }
+
+    SDL_UnlockSurface(surface);
+
+    // Replace the original surface with the new one
+    *surface = *new_surface;
+}
 
 
 //function that splits a png of a sudoku grid into 81 images of the individual cells
