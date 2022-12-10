@@ -158,7 +158,7 @@ double *compute_output_layer(double* output_layer, double* output_layer_bias,
             activation += hidden_layer[p] * output_layer_weights[p][j];
         }
         output_layer[j] = sigmoid(activation);
-        printf("%f ", sigmoid(activation));
+        printf("%f ", activation);
     }
     printf("\n");
     return output_layer;
