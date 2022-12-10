@@ -164,7 +164,7 @@ double *compute_hidden_layer(double hidden_layer[num_hidden], double* hidden_lay
     for (int j = 0; j < num_hidden; j++){
         double activation = hidden_layer_bias[j];
         for (int p = 0; p < num_inputs; p++){
-            activation += training_input[p] * hidden_layer_weights[p][j] * 0.01;
+            activation += training_input[p] * hidden_layer_weights[p][j];
         }
         hidden_layer[j] = sigmoid(activation);
     }
@@ -178,7 +178,7 @@ double *compute_output_layer(double output_layer[num_output], double* output_lay
     for (int j = 0; j < num_output; j++){
         double activation = output_layer_bias[j];
         for (int p = 0; p < num_hidden; p++){
-            activation += hidden_layer[p] * output_layer_weights[p][j] * 0.01;
+            activation += hidden_layer[p] * output_layer_weights[p][j];
         }
         output_layer[j] = sigmoid(activation);
     }
@@ -278,20 +278,8 @@ void train_network(
                     hidden_layer_weights[p][j] += input[p] * delta_hidden[j] * learning_rate;
                 }
             }
-
-            printf("Expected: %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", 
-            training_outputs[k][0], training_outputs[k][1], training_outputs[k][2], 
-            training_outputs[k][3], training_outputs[k][4], training_outputs[k][5], 
-            training_outputs[k][6], training_outputs[k][7], training_outputs[k][8], 
-            training_outputs[k][9]);
-            printf("Got: %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", 
-            output_layer[0], output_layer[1], output_layer[2], 
-            output_layer[3], output_layer[4], output_layer[5], 
-            output_layer[6], output_layer[7], output_layer[8], 
-            output_layer[9]);
         }
     }
-    
     
     printf("\nTraining is done!\n");
     char path[] = "bin/weights_biases.txt";
@@ -340,7 +328,7 @@ int *main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        int epochs = 1000;
+        int epochs = 10000;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
