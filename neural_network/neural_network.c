@@ -210,6 +210,12 @@ void train_network(
 
             double input[num_inputs];
 	        memcpy(input, convert_to_array(training_inputs[k]), sizeof(double) * num_inputs);
+            for (int j = 0; j < num_inputs; j++){
+                if (j % res == 0){
+                    printf("\n");
+                }
+                printf("%d ", (int)input[j]);
+            }
 
             //Compute hidden layer
             compute_hidden_layer(hidden_layer, hidden_layer_bias, hidden_layer_weights, input);
@@ -311,7 +317,7 @@ int *main(){
 	    printf("Weights and biases loaded and set.\n");
     } 
     else {
-        int epochs = 1000;
+        int epochs = 1;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
             hidden_layer_weights, output_layer_weights);
