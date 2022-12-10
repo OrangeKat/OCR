@@ -4,12 +4,24 @@
 
 // Function that removes the border lines from a cell
 void remove_border(int* array, int width, int height){
-    for (int i = 0; i < height; i++){
-        for (int j = 0; j < width; j++){
-            if (i == 0 || i == height - 1 || j == 0 || j == width - 1){
-                array[i * height + j] = 0;
-            }
+    struct CoordinateQueue* queue = create_queue();
+    struct Coordinate coord = {0, 0};
+    enqueue(queue, coord);
+    while (!is_empty(queue)){
+        struct Coordinate coord = dequeue(queue);
+        int row = coord.row;
+        int col = coord.col;
+        if (row < 0 || row >= height || col < 0 || col >= width){
+            continue;
         }
+        if (array[row * height + col] == 0){
+            continue;
+        }
+        array[row * height + col] = 1;
+        enqueue(queue, (struct Coordinate){row - 1, col});
+        enqueue(queue, (struct Coordinate){row + 1, col});
+        enqueue(queue, (struct Coordinate){row, col - 1});
+        enqueue(queue, (struct Coordinate){row, col + 1});
     }
 }
 
@@ -27,9 +39,9 @@ int *convert_to_array(SDL_Surface *image){
             SDL_GetRGB(pixels[index], image->format, &r, &g, &b);
 
             if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 1;
-            } else {
                 array[i * height + j] = 0;
+            } else {
+                array[i * height + j] = 1;
             }
         }
     }
