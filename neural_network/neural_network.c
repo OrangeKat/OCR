@@ -406,14 +406,15 @@ int *main(){
         printf("%f, ", output_layer[n]);
     }
     printf("\n");
-    /*
+    */
     for (int i = 0; i < 81; i++){
         if (i % 9 == 0){
             printf("\n");
         }
         printf("%d, ", grid[i]);
     }
-    */
+    printf("\n");
+    
     return grid;
     
 }
