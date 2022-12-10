@@ -6,10 +6,10 @@ struct CoordinateQueue* create_queue()
 {
     struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
     queue->size = 0;
-    queue->capacity = 100;
+    queue->capacity = 10000;
     queue->front = 0;
     queue->back = -1;
-    queue->data = malloc(100 * sizeof(struct Coordinate));
+    queue->data = malloc(10000 * sizeof(struct Coordinate));
     return queue;
 }
 
