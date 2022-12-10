@@ -317,11 +317,11 @@ int main(int argc, char *argv[]) {
             hidden_layer_weights, output_layer_weights);
     }
     
-    printf("Treating image: %s...\n", argv[0]);
+    printf("Treating image: %s...\n", argv[1]);
     
     double input[num_inputs];
     
-    memcpy(input, convert_to_array(argv[0]), sizeof(double) * num_inputs);
+    memcpy(input, convert_to_array(argv[1]), sizeof(double) * num_inputs);
 
     // Forward pass
             
