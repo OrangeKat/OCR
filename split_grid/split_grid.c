@@ -28,7 +28,7 @@ void split_image(char *filename){
             for(int k = 0; k < cell_height; k++){
                 Uint8 r, g, b;
                 SDL_GetRGB(pixels[(y + k) * height + (x + k)], image->format, &r, &g, &b);
-                if (corner_up < 0 && (r + g + b) / 3 < 128){
+                if (corner_up < 0 && (r + g + b) / 3 > 128){
                     corner_up = k;
                     break;
                 }
@@ -37,7 +37,7 @@ void split_image(char *filename){
             for (int k = cell_height; k > 0; k--){
                 Uint8 r, g, b;
                 SDL_GetRGB(pixels[(y + k) * height + (x + k)], image->format, &r, &g, &b);
-                if (corner_down < 0 && (r + g + b) / 3 < 128){
+                if (corner_down < 0 && (r + g + b) / 3 > 128){
                     corner_down = k;
                     break;
                 }
