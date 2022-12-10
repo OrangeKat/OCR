@@ -321,20 +321,21 @@ int main(int argc, char *argv[]) {
 
     DIR *d = opendir("bin");
     struct dirent *entry;
-    bool found = 0;
+    int found = 0;
     while ((entry = readdir(d)) != NULL){
-        if (entry->d_name == "weights_biases.txt")
+        if (entry->d_name == "weights_biases.txt"){
             found = 1;
             break;
+        }
     }
-    if (found) {
+    if (found == 1) {
         // Load weights and biases
         char path[] = "bin/weights_biases.txt";
         load_weights_and_biases(path, hidden_layer_weights, output_layer_weights, hidden_layer_bias, output_layer_bias);
         printf("Weights and biases loaded and set.\n");
     } 
     else {
-        printf("No weights and biases found. Initializing new ones...\n")
+        printf("No weights and biases found. Initializing new ones...\n");
         int epochs = 10000;
         // Init weights and biases and train network
         train_network(epochs, hidden_layer, output_layer, hidden_layer_bias, output_layer_bias, 
