@@ -80,7 +80,7 @@ void split_image(char *filename){
     resize_image(image, 450);
     int *array = malloc(sizeof(int) * height * width);
     memcpy(array, convert_to_array(image), sizeof(int) * height * width);
-    remove_border(array,width,height);
+    remove_border(array, 0, width, height);
     image = create_surface_from_2d_array(array, width, height);
 
     for (int i = 0; i < 9; i++){
