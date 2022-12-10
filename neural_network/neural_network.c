@@ -350,10 +350,8 @@ int main(int argc, char *argv[]) {
     struct dirent *entry;
     FILE *out = fopen("grid.txt", "w");
     int i = 1;
-    while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_REG) {
-            char *filename = malloc(sizeof(char) * 100);
-            sprintf(filename, "%s%s", argv[1], entry->d_name);
+    for (int i = 0; i < 81; i++) {
+            const char filname[25] = "%scell_%d.png", argv[1], i;
             printf("Treating %s...\n",filename);
             double input[num_inputs];
             SDL_Surface *image = load_image(filename);
@@ -398,9 +396,7 @@ int main(int argc, char *argv[]) {
             if (i % 27 == 0) {
                 fprintf(out, "\n");
             }
-
-            i++;
-        }
+        
     }
     fclose(out);
     return 1;
