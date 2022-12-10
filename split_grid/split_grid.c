@@ -30,17 +30,13 @@ int *convert_to_array(SDL_Surface *image){
     int width = image->w;
     Uint32* pixels = image->pixels;
     int *array = malloc(height * width * sizeof(int));
-    for (int i = 0; i < height; i++){
-        for (int j = 0; j < width; j++){
-            
-            Uint8 r, g, b;
-            SDL_GetRGB(pixels[i * height + j], image->format, &r, &g, &b);
-
-            if ((r + g + b) / 3 < 128){
-                array[i * height + j] = 0;
-            } else {
-                array[i * height + j] = 1;
-            }
+    for (int i = 0; i < height * width; i++){
+        Uint8 r, g, b;
+        SDL_GetRGB(pixels[i], image->format, &r, &g, &b);
+        if ((r + g + b) / 3 < 128){
+            array[i] = 0;
+        } else {
+            array[i] = 1;
         }
     }
     SDL_FreeSurface(image);
