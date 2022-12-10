@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <dirent.h>
 #include "neural_network.h"
 #include "binarization.c"
@@ -353,7 +355,9 @@ int main(int argc, char *argv[]) {
             sprintf(filename, "./%s%s", argv[1], entry->d_name);
             printf("Treating %s...\n",filename);
             double input[num_inputs];
-            memcpy(input, convert_to_array(filename), sizeof(double) * num_inputs);
+            SDL_Surface *image = load_image(filename);
+            memcpy(input, convert_to_array(image), sizeof(double) * num_inputs);
+            SDL_FreeSurface(image);
             remove_border(input);
 
             // Forward pass
