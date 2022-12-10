@@ -2,66 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-struct Coordinate
-{
-    int x;
-    int y;
-};
-
-struct CoordinateQueue
-{
-    int size;
-    int capacity;
-    int front;
-    int back;
-    struct Coordinate* data;
-};
-
-void enqueue(struct CoordinateQueue* queue, struct Coordinate coord)
-{
-    if (queue->size == queue->capacity)
-    {
-        // Double the queue's capacity if it is full
-        queue->capacity *= 2;
-        queue->data = realloc(queue->data, queue->capacity * sizeof(struct Coordinate));
-    }
-
-    queue->data[++queue->back] = coord;
-    queue->size++;
-}
-
-struct Coordinate dequeue(struct CoordinateQueue* queue)
-{
-    struct Coordinate coord = queue->data[queue->front++];
-    if (queue->front == queue->capacity)
-    {
-        queue->front = 0;
-    }
-    queue->size--;
-    return coord;
-}
-
-int is_empty(struct CoordinateQueue* queue)
-{
-    if (queue->size == 0)
-    {
-        return 1;
-    }
-    return 0;
-}
-
-struct CoordinateQueue create_queue()
-{
-    struct CoordinateQueue queue;
-    queue.size = 0;
-    queue.capacity = 1;
-    queue.front = 0;
-    queue.back = -1;
-    queue.data = malloc(queue.capacity * sizeof(struct Coordinate));
-    return queue;
-}
-
-
 SDL_Surface *resize_image(SDL_Surface *image, int n){
     SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
     SDL_BlitScaled(image,NULL,resized_image,NULL);
@@ -69,30 +9,26 @@ SDL_Surface *resize_image(SDL_Surface *image, int n){
 }
 
 // Function that removes the border lines from a cell
-void remove_border(int* array, int width, int height){
-    struct CoordinateQueue* queue = malloc(sizeof(struct CoordinateQueue));
-    *queue = create_queue();
-    struct Coordinate coord = {0, 0};
-    enqueue(queue, coord);
-    while (is_empty(queue) == 0){
-        struct Coordinate coord = dequeue(queue);
-        int row = coord.x;
-        int col = coord.y;
-        if (row < 0 || row >= height || col < 0 || col >= width){
-            continue;
+void remove_border(int* array, int index, int width, int height){
+    if (array[index] == 1){
+        int x = index % width;
+        int y = index / width;
+        if (!(x == 0)){
+            remove_border(array, y * height + x - 1, width, height);
         }
-        if (array[row * height + col] == 1){
-            continue;
+        if (!(x == width - 1)){
+            remove_border(array, y * height + x + 1, width, height);
         }
-        array[row * height + col] = 1;
-        enqueue(queue, (struct Coordinate){row - 1, col});
-        enqueue(queue, (struct Coordinate){row + 1, col});
-        enqueue(queue, (struct Coordinate){row, col - 1});
-        enqueue(queue, (struct Coordinate){row, col + 1});
+        if (!(y == 0)){
+            remove_border(array, (y - 1) * height + x, width, height);
+        }
+        if (!(y == height - 1)){
+            remove_border(array, (y + 1) * height + x, width, height);
+        }
+        array[index] = 0;
     }
-    free(queue->data);
-    free(queue);
 }
+    
 
 // Function that converts a black and white image to a array of 0s and 1s
 int *convert_to_array(SDL_Surface *image){
