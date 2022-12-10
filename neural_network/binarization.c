@@ -40,7 +40,7 @@ double *convert_to_array(SDL_Surface  *image){
 }
 
 // Function that loads an image
-SDL_Surface *load_image(char *path){
+SDL_Surface *load_image(const char *path){
     SDL_Surface *image = IMG_Load(path);
     return image;
 }
