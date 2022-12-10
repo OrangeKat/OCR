@@ -2,49 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-
-// function that removes the border lines from a cell image
-void remove_border_lines(SDL_Surface *surface) {
-    int found_black = 1;
-    Uint32 *pixels = surface->pixels;
-    int height = surface->h;
-    int width = surface->w;
-    int start = 0;
-    while (found_black == 1){
-        int k = 0;
-        for (int i = start; i < width; i++){
-            Uint8 r,g,b;
-            SDL_GetRGB(pixels[height + i],surface->format,&r,&g,&b);
-            if (r + g + b / 3 < 128){
-                k = 1;
-                SDL_MapRGB(surface->format, 255, 255, 255);
-            }
-            SDL_GetRGB(pixels[i],surface->format,&r,&g,&b);
-            if (r + g + b / 3 < 128){
-                k = 1;
-                SDL_MapRGB(surface->format, 255, 255, 255);
-            }
-        }
-        for (int j = start; j < surface->h; j++){
-            Uint8 r,g,b;
-            SDL_GetRGB(pixels[j * height],surface->format,&r,&g,&b);
-            if (r + g + b / 3 < 128){
-                k = 1;
-                SDL_MapRGB(surface->format, 255, 255, 255);
-            }
-            SDL_GetRGB(pixels[j * height + width - 1],surface->format,&r,&g,&b);
-            if (r + g + b / 3 < 128){
-                k = 1;
-                SDL_MapRGB(surface->format, 255, 255, 255);
-            }
-        }
-        found_black = k;
-        start++;
-        height--;
-        width--;
-    }
-}
-
 //function that splits a png of a sudoku grid into 81 images of the individual cells
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
