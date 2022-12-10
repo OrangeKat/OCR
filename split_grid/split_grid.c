@@ -42,6 +42,8 @@ void remove_border(int* array, int width, int height){
         enqueue(queue, (struct Coordinate){row, col - 1});
         enqueue(queue, (struct Coordinate){row, col + 1});
     }
+    free(queue->data);
+    free(queue);
 }
 
 // Function that converts a black and white image to a array of 0s and 1s
