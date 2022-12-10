@@ -14,7 +14,7 @@
 #define num_inputs 256
 #define num_hidden 256
 #define num_output 10
-const double learning_rate = 0.001f;
+double learning_rate = 0.1f;
 #define res 16
 #define num_training_sets 10
 
