@@ -2,12 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-// function that resizes an image to an nxn image
-SDL_Surface *resize_image(SDL_Surface *image, int n){
-    SDL_Surface *resized_image = SDL_CreateRGBSurface(0,n,n,32,0,0,0,0);
-    SDL_BlitScaled(image,NULL,resized_image,NULL);
-    return resized_image;
-}
 
 // function that removes the border lines from a cell image
 void remove_border_lines(SDL_Surface *surface) {
@@ -47,7 +41,6 @@ void split_image(char *filename){
             SDL_Rect rect = {x,y,cell_width,cell_height};
             SDL_Surface *cell = SDL_CreateRGBSurface(0,cell_width,cell_height,32,0,0,0,0);
             SDL_BlitSurface(image,&rect,cell,NULL);
-            cell = resize_image(cell,16);
             char *cell_name = malloc(28);
 	        sprintf(cell_name, "output/cell_%d.png",n);
             IMG_SavePNG(cell,cell_name);
