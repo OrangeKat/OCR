@@ -1,0 +1,57 @@
+make rotation
+./rotation ${file}
+TO ROTATE FILE
+
+make grayscale
+./grayscale ${file}
+IT THEN SAVES A grayscale.png file
+
+make preprocess
+./preprocess ${file}
+Returns the image binarized as preprocess.png. The input file is left unchanged.
+
+make detectAllLines
+./detectAllLines ${file}
+DETECT THE GRID AND EXPORTS IT IN grid.png
+
+make solver
+./solver ${file}
+SOLVES THE GRID AND EXPORTS IT IN ${file}.result
+
+cd xor/
+make
+./neural_network_xor
+LAUNCHES THE XOR NEURAL NETWORK OUTPUT IN TERMINAL
+
+cd txt_to_img/
+make
+./tticonvert ${file} ${file}(optional)
+CONVERTS THE FIRST TEXT FILE TO AN IMAGE FILE, SECOND FILE OPTIONAL
+IF FIRST FILE IS SOLVED BOARD AND SECOND FILE IS IMCOMPLETE BOARD,
+ALREADY FILLED CELLS ARE BLACK AND SOLVED CELLS ARE GREEN
+
+------------- AUTO ROTATION ----------------
+make autorotation
+./autorotation [PARAMETER]
+Param1 has to be RELATIVE image path, ex : "images/image_05.jpeg"
+
+-------------- SPLIT GRID ------------------
+cd split_grid/
+make
+./split_grid [PARAMETER]
+PARAMETER : path to image file
+OUTPUT : output/cell_1.png -> output/cell_81.png
+( The split_grid now returns all cells without any of the sudoku grid bordering )
+
+------------ NEURAL NETWORK ----------------
+cd neural_network/
+make
+./neural_network [PARAMETER]
+PARAMETER : path to image file
+OUTPUT : the int value of the cell
+( The neural network only runs 1 image at a time, if the bin/weights_and_biases.txt is not present
+the first time the network is called it will be trained and will make the txt file, if the file is
+present then it will skip training )
+
+
+
