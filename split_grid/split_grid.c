@@ -42,7 +42,7 @@ int *convert_to_array(SDL_Surface *image){
     for (int i = 0; i < height * width; i++){
         Uint8 r, g, b;
         SDL_GetRGB(pixels[i], image->format, &r, &g, &b);
-        if ((r + g + b) / 3 < 128){
+        if ((r + g + b) / 3 < 200){
             array[i] = 0;
         } else {
             array[i] = 1;
@@ -66,9 +66,9 @@ SDL_Surface* create_surface_from_2d_array(int *array, int width, int height){
 //function that splits a png of a sudoku grid into 81 images of the individual cells
 void split_image(char *filename){
     SDL_Surface *image = IMG_Load(filename);
-    image = resize_image(image, 450);
-    int height = 450;
-    int width = 450;
+    image = resize_image(image, 900);
+    int height = 900;
+    int width = 900;
     int cell_height = height/9;
     int cell_width = width/9;
     int x = 0,y = 0;
